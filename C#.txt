@@ -1,0 +1,773 @@
+1 Allgemeine Einführung in .NET
+	1.2 .NET unter die Lupe genommen
+		1.2.4 Die »Common Language Specification« (CLS)
+			
+			Die Common Language Specification (CLS) sind die Richtlinien, die eine Sprache beinhalten muss um eine .NET Sprache zu sein. Sofern eine Programiersprache diese Richtlinien erfüllt, kann z.B. eine Klasse in dieser Sprache in jeder beliebigen anderen .NET basierten Sprache genutzt, erweitert, vererbt etc. werden.
+			
+			
+		1.2.5 Das »Common Type System« (CTS)
+			
+			Das Common Type System beschreibt in erster Linie die Datentypen von .NET. Man unterscheidet zwischen Wertetypen und Referenztypen. Während Wertetypen auf dem Stack abgelegt werden und eingebaute Typen wie ganzzahlige Typen bzw. Fließkommatypen enthalten, enthalten Referenztypen unter anderem die aus den Klassen erzeugten Objekte. Referenztypen werden auf dem Heap abgelegt. Diese Typen können sogenannte Mitglieder besitzen (Felder, Eigenschaften, Methoden und Ereignisse). Die CTS handhabt außerdem die Sichtbarkeit dieser Mitlgieder.
+		
+		
+		1.2.6 Das .NET Framework
+			
+			Ein Framework ist eine Art Gerüst in dem Anwendungen entwichelt, kompiliert und ausgeführt werden. Es spiegelt also die Gesamtheit vom Code bis zum ausgeführten Programm wieder.
+			
+			Die CLS sowie die CTS sind ein Teil dieses Frameworks. Weitere Teile sind die »Common Language Runtime« (CLR) sowie die Klassenbibliothek des .NET.
+		
+		
+		1.2.7 Die »Common Language Runtime« (CLR)
+			
+			Die Common Language Runtime ist die Laufzeitumgebung des .NET. Dieser Teil des Frameworks ist für die Ausführung der Anwendungen zuständig und bildet damit das Herzstück des Frameworks.
+			Die CLR ist kein Programm an sich sondern beschreibt unterschiedliche Dienste die als Bindeglied zwischen dem IL Code und der Hardware zu verstehen ist.
+			
+			Diese Dienste sind:
+			
+			-Der Class Loader, um Klassen in die Laufzeitumgebung zu laden
+			-Der Type Checker um unzulässige Typkonvertierungen zu unterbinden
+			-Der JIT compiler (JITter), um den IL Code zur Laufzeit in nativen Code umzuwandeln, der vom Prozessor ausgeführt werden kann
+			-Der Exception Manager, der die Ausnahmebehandlung unterstützt
+			-Der Garbage Collector, der eine automatische Speicherbereinigung anstößt sobald Objekte nicht mehr genutzt werden
+			-Die Security Engine, die überprüft, ob der User über ausreichende Berechtigung verfügt um den angeforderten Code auszuführen
+			-Die Debug Machine zum Debuggen der Anwendung
+			-Der Thread Service zum unterstützen multithread-fähiger Anwendungen
+			-Der COM Marshaller zur Sicherstellung der Kommunikation mit COM-Komponenten (COM = Component Object Model)
+			
+		
+		1.2.8 Die .NET-Klassenbibliothek
+		
+			Die .Net-Klassenbibliothek beschreibt die Gesamtheit der in .NET zur Verfügung stehenden Standartklassen. Innerhalb der Klassenbibliothek gibt es die sogenannte Klassenhierarchie, da jede Klasse mit den anderen Klassen innerhalb der Bibliothek in enger Beziehung stehen.
+			
+			Die Hierarchie hat natürlich auch eine Wurzel. Diese ist die Klasse »Object«. Jede Klasse erbt die Eigenschaften dieser untersten Klasse. Dies ist ein wichtiger Punkt in der Klassenbibliothek, da es zeigt wie diese aufgebaut ist, bzw. wie die Beziehung der Klassen undereinander zu verstehen ist.
+		
+		
+		1.2.9 Das Konzept der Namespaces
+			
+			Namespaces geben einen Bereich von Klassendefinitionen an, der nach Sinn eingeteilt ist. Sie sind also eine Art Bibliothek bestimmter Klassen (nicht zu verwechseln mit der Klassenbibliothek). Zu beachten ist hierbei, dass sich eine Klasse, die sich innerhalb eines bestimmten Namespaces befindet nicht in der Funktionalität bzw. dessen Möglichkeiten von einer Klasse in einem anderen Namespace unterscheiden muss. Der Namespace ist nur dazu da dem Entwickler eine logische Zusammnfassung bestimmter Klassen zu geben die im gleichen Einsatzgebiet arbeiten.
+			Auch die Namspaces sind, wie die Klassenbibliothek, baumartig aufgebaut. Die Wurzel heißt hier »System«. In diesem Namespace ist z.B. die Klasse enthalten, die den Datentyp »int« beschreibt.
+			
+			
+2 Grundlagen der Sprache C#
+	2.3 Variablen und Datentypen
+		2.3.1 Variablendeklaration
+		
+			Daten werden in Variablen gespeichert. Diese Variablen stehen für eine bestimmte Adresse im Speicher der für diese Variable reserviert wird. Je nach Typ der Variable wird eine unterschiedlich große Menge an Bytes im Speicher reserviert.
+			Der sogenannte Bezeichner gibt der Variablen einen leicht zu merkenden Namen, er ist also quasi ein Synonym eines bestimmten Speicherortes.
+			Bevor eine Variable genutzt werden kann muss sie deklariert werden. Dies geschiet in dem man den Datentyp gefolgt von dem Variablenbezeichner angiebt. Abschließend wird, wie nach jeder Anweisung, ein Semikolon gesetzt.
+			Die allgemeine Syntax für die Deklaration einer Variablen lautet also:
+			
+				Datentyp Bezeichner;
+			
+			Wird der Variablen nach der Deklaration ein Wert zugewiesen spricht man auch von der Initalisierung selbiger.
+			
+			Zu diesen hier ein Praktisches Beispiel:
+			
+				Deklaration:
+				
+				int value;
+				
+				Initialisierung:
+				
+				value = 1000;
+				
+			Die Initialisierung einer Variable kann auch während der Deklaration stattfinden zum Beispiel
+			
+				int value = 1000;
+				
+			Eine Variable kann nicht initialisiert werden, wenn sie nicht vorher deklariert wurde. Des Weiteren ist zu beachten, dass eine nicht initialisierte Variable keinen Wert besitzt, auch nicht die 0. Die Auswertung bzw. der Aufruf einer nicht initialisierten Variablen ist demnach nicht möglich.
+			
+			Es können auch mehrere Variablen des gleichen Typs innerhalb einer Anweisung Deklariert und nach bedarf initialisiert werden.
+			
+				int a, b = 1, c = 3;
+				
+				
+		2.3.2 Der Variablenbezeichner
+			
+			Der Variablenbezeiner muss eindeutig sein, darf also nicht den Namen einer bestehenden Klasse, Prozedur, Schlüsselwort oder Objekt erhalten. Außerdem darf er nur aus alphanumerischen Zeichen sowie dem Unterstrich bestehen, wobei der Anfang immer ein Buchstabe sein muss.
+			
+		2.3.4 Ein- und Ausgabemethoden der Klasse »Console«
+			
+			Wenn eine Methode aufgerufen werden soll muss der Objekt- bzw. Klassenname gefolgt von einem Punkt und dem Methodennamen eingegeben werden. Es folgt ein Klammernpaar. Die allgemeine Schreibweise um eine Methode aufzurufen lautet also:
+			
+			Objektname.Methodenname();
+			
+			Es lassen sich in der Methode Write bzw. WriteLine auch sogenannte Formatausdrücke ausgeben. Diese werden innerhalb des auszugebenden Textes (der in Anführungzeichen geschrieben wird) in geschweiften Klammern geschrieben und enthält mindestens eine Zahl. Hinter dem auszugebenden Text stehen dann kommagetrennt die Variablen, die anstelle der Formatausdrücke stehen sollen. Hierzu ein Beispiel:
+			
+				string text1 = "C#";
+				string text2 = "Spaß";
+				Console.WriteLinw("{0] macht {1}", text1, text2);
+			
+			Möchte man, dass der Formatausdruck eine bestimmte Breite bekommt, kann man selbige als Wert, der kommagetrennt vom Zählerwert geschrieben wird, übergeben. Beispiel:
+			
+				Console.WriteLinw("{0,3] macht {1,20}", text1, text2);
+				
+			Der angegebene Wert fügt der der Ausgabe gegebenenfalls Leerzeichen hinzu. Es kann auch eine negative Zahl genommen werden, dies sorgt dafür, dass der Wert Linksbündig geschrieben wird und dahinter gegebenenfalls die Leerzeichen angehängt werden.
+			
+			
+		2.3.5 Die einfachen Datentypen
+			
+			Folgend eine Auflistung der elementaren Datentypen von .NET und deren Alias in C#:
+
+			
+				.NET		C#			CLS Konform		Wertebereich
+				
+				Byte		Byte		ja				0 ... 255
+				SByte		sbyte		nein			–128 ... 127
+				Int16		short		ja				–2^15 ... 2^15 –1
+				UInt16		ushort		nein			0 ... 65535
+				Int32		int			ja				–2^31 ... 2^31 –1
+				UInt32		Uint		nein			0 ... 2^32 –1
+				Int64		long		ja				–2^63 ... 2^63 –1
+				UInt64		Ulong		nein			0 ... 2^64 –1
+				Single		float		ja				1,4 * 10^–45 bis 3,4 * 10^38
+				Double		double		ja				5,0 * 10^–324 bis 1,7 * 10^308
+				Decimal		decimal		ja				
+				Char		char		ja				Unicode-Zeichen zwischen 0 und 65535
+				String		string		ja				ca. 2^31 Unicode-Zeichen
+				Boolean		bool		ja				true oder false
+				Object		object		ja				Eine Variable vom Typ Object kann jeden anderen Datentyp enthalten, ist also universell.
+				
+			Weisen wir einer Variablen des Datentyps float eine Fließkommazahl zu, so kommt es zu einem Kompilierfehler. Dies ist dem Fakt geschuldet, dass vor dem Zuweisen eines Wertes an eine Variable die zuzuweisende Zahl zwischengespeichert werden muss. In der Laufzeitumgebung wird einer Fließkommazahl jedoch standartmäßig der Typ double zugewiesen. Dies führt dazu, dass man versucht, eine Zahl des Typs double in einer Variable des Typs float zuzuweisen. Da der Wertebereich von double jedoch Größer ist, als der von float, kommt es zu diesem Fehler. Man kann sich abhilfe schaffen indem man der zu speichernden Zahl das Suffix F oder f (für float) zuweist. Dies ermöglicht das Speichern der Zahl in einer float Variablen, gemäß dem Fall, die Zahl befindet sich innerhalb des Wertebereichs eines float.
+			
+			Weitere Suffixe sind D bzw. d für double und M bzw. m für decimal.
+			
+			Die unterschiedlichen Datentypen für Fließkommazahlen unterscheiden sich, neben dem Fakt, dass sie unterschiedlich große Speicherbreiche reserbieren, damit ligischerweise auch in der Genauigkeit.
+			
+			Der Datentyp Char speichert genau ein Zeichen aus dem Unicode Zeichensatz aufnehmen. Sie werden in einfache Anführungszeichen gesetzt.
+			
+			Der Datentyp string speichert Zeichenketten. Diese werden in normalen Anführungszeichen gesetzt.
+			
+			Variablen vom Typ bool können nur true oder false als Wert erhalten wobei false der standartwert ist.
+			
+			Variablen vom Typ object sind am allgemeinsten. Diese können jeden beliebigen Datentyp annehmen. So ist folgender Code ohne weiteres ausführbar:
+			
+				object universal;
+				universal = 5;
+				Console.WriteLine(universal);
+				universal = "Hallo Welt.";
+				Console.WriteLine(universal);
+				
+			Der Beweis, dass in C# alles als object angesehen wird (sogar die elementaren Datentypen) sieht man, wenn man z.B. Int16. eingibt. Hierbei ist wie oben beschrieben der Punkt ganz wichtig. Es zeigt sich in Visual Studio ein Dropdownmenü mit allen Methoden die im Objekt Int16 enthalten sind.
+			
+		
+		2.3.6 Typenkonvertierung
+		
+			Es ist prinzipiell möglich einen Datentyp in einen anderen Datentyp umzuwandeln. Man unterscheidet generell zwischen impliziter und expliziter Konvertierung.
+			
+				Die implizite Konvertierung:
+				
+					Die implizite Konvertierung wird vom Compiler automatisch genutzt.
+					Bei der impliziten Konvertierung kann ein (Zahlen-) Datentyp nur dann in einen anderen konvertiert werden, sofern der Zieldatentyp einen größeren Wertebereich aufweist als der Ausgangsdatentyp oder anders ausgedrückt:
+			
+						byte --> short --> int --> long und ab da an entweder --> float --> double oder --> decimal
+				
+						Eine Konvertierung kann immer nur in Pfeilrichtung durchgeführt werden, gegen die Pfeilrichtung wäre die Konvertierung explizit.
+						
+						Zu beachten ist hierbei, dass entweder von einem Datentyp mit einem kleineren Wertebereich in float bzw. double konvertiert werden kann oder in decimal. Eine implizite konvertierung von z.B. float in decimal ist nicht möglich.
+						Ausnahmen bilden hier die Datentypen bool, string, char und object.
+						Ein bool bzw. ein string können implizit in keinen anderen Datentyp konvertiert werden. Ein char kann, mit Ausnahme von byte und short in jeden anderen Datentyp konvertiert werden.
+						Zu Konvertierung einer Variablen des Typs object kommen wir später.
+						
+				Die explizite Konvertierung
+				
+					Unter expliziter konvertierung versteht man die ausdrückliche Anweisung an den Compiler einen bestimmten Datentyp in einen anderen umzuwandeln.
+					Die allgemeine Syntax lautet:
+					
+						(Zieldatentyp)Ausdruck
+					
+					In diesem Fall nennt man die runden Klammern Typkonvertierungoperator. Mit der expliziten Konvertierung ist z.B. auch eine Konvertierung vom Typ float in decimal möglich, genau wie von z.B. byte in char.
+					
+					Der expliziten Konvertierung mit dem Typkonvertierungoperator sind jedoch Grenzen gesetzt. Ein bool Datentyp kann auf diese Weise auch nicht in einen anderen konvertiert werden. Hierzu wird die Klasse »Convert« verwendet.
+					
+					Diese Klasse enthält folgende Methoden:
+					
+						ToBoolean(Ausdruck)
+						ToByte(Ausdruck)
+						ToChar(Ausdruck)
+						ToDecimal(Ausdruck)
+						ToDouble(Ausdruck)
+						ToInt16(Ausdruck)
+						ToInt32(Ausdruck)
+						ToInt64(Ausdruck)
+						ToSByte(Ausdruck)
+						ToSingle(Ausdruck)
+						ToString(Ausdruck)
+						ToUInt16(Ausdruck)
+						ToUInt32(Ausdruck)
+						ToUInt64(Ausdruck)
+						
+					Der Vorteil der Convert Methode ist, dass damit Konvertierungen möglich sind, die mit dem Typkonvertierungsoperator nicht möglich sind. Allerdings kann Convert nur in elementare Datentypen konvertieren. Es kann beim Typenkonvertierungoperator dazu kommen, dass ein Überlauf einfach ignoriert und abgeschnitten wird, wenn wir von einem Datentyp mit einem höheren Wertebereich in einen Datentyp mit kleinerem Wertebereich konvertieren, die zu konvertierende Zahl jedoch den Wertebereich des "kleineren" Datentypes übersteigt. Dies kann mit der Convert Methode nicht geschehen.
+					
+					
+	2.4 Operatoren
+		
+		Ein sogenannter Ausdruck ist die kleinste ausführbare Einheit eines Programms und setzt mindestens einen Operator voraus. Ein Audruck besteht immer aus mindestens einem Operanden und mindestens einem Operator. Im Beispiel
+		
+			value = 22;
+			
+		sind "value" sowie die Zahl 22 die Operanden während das = den Operator dastellt.
+		Es wird zwischen folgenden Operatoren unterschieden:
+		
+			-arithmetische Operatoren
+			-Vergleichsoperatoren
+			-logische Operatoren
+			-bitweise Operatoren
+			-Zuweisungsoperatoren
+			-sonstige Operatoren
+			
+		2.4.1 Arithmetische Operatoren
+			
+			Unter arithmetischen Operatoren versteht man in der Programmierung neben den standartmäßigen ( + - * / ) auch die Modulo Operation ( % ) sowie die schnellschreibweisen ++ (plus eins) und -- (minus eins).
+			
+			Die arithmetischen Operatoren + und - haben zusätzlich noch den Sinn einer Variablen ein Vorzeichen zuzuweisen.
+			Zu beachten ist, dass der Operator ++ bzw. -- den Wert einer Variablen abhänig von der Positionierung auf unterschiedliche Weise verändert. Hierzu folgendes Beispiel:
+			
+				int x = 5;
+				int y = x++;
+				
+				In diesem Beispiel wird der Variablen x der Wert 5 zugewiesen. Im nächsten Schritt wird der Variablen y als erstes der Wert der Variablen x (also 5) zugewiesen und dann der Wert von x um eins erhöht. Die Variable x enthält nach der Deklaration der Variable y also den Wert 6, die Variable y hingegen den Wert 5.
+				
+				int a = 5;
+				int b = ++a;
+				
+				In diesem Beispiel verhällt es sich anders. Im ersten Schritt wird der Variablen a der Wert 5 zugeordnet und im zweiten als erstes der Wert der Variable a um eins erhöht und erst dann der Variablen b der Wert von a zugewiesen. Faktisch bedeutet dies, dass a als auch b nach der Deklaration der Variablen b den Wert 6 enthalten.
+				
+			Weiterhin ist bei der Division zu beachten, dass auch hier das Problem der Zwischenspeicherung (aus dem Kapitel 2.3.5) auftritt, wenn wir zwei ganzzahlige Werte miteinander dividieren, die eine Fließkommazahl als Ergebnis haben. Dies ist wie gesagt dem Fakt der Zwischenspeicherung geschuldet. Hierzu ein Beispiel:
+			
+				double value = 3/4;
+				Console.WriteLine(value);
+				
+				Bevor die Zahl 3 nun durch 4 dividiert wird, werden die beiden Werte zwischengespeichert. Hierbei geht die Laufzeitumgebung natürlich davon aus, dass es sich bei den Zahlen um integer Zahlen handelt. Da bei einer integer jedoch die Nachkommastellen abgeschnitten werden, kommt das Ergebnis 0 dabei heraus. Da wir jedoch wissen, dass die Laufzeitumgebung das Ergebnis immer implizit in den höheren der beiden Datentypen konvertiert, können wir diesen Fehler jedoch leicht umgehen.
+				
+				double value = 3.0/4;
+				Console.WriteLine(value);
+				
+				Dies ergibt das richtige Ergebnis, da wir eine Zahl vom Datentyp double (da Fließkommazahlen in der Laufzeitumgebung bekanntermaßen immer als double gespeichert werden) in die Gleichung mit einbringen und dadurch als Ergebnis eine Variable des höheren Datentyps double erhalten.
+			
+			
+		2.4.2 Vergleichsoperatoren
+		
+			Vergleichsoperatoren vergleichen zwei Ausdrücke miteinander. Das Ergebnis eines solchen Vergleichs ist immer ein boolscher Wert also entweder true oder false. Es kann hierbei auf Gleichheit, Ungleichheit oder auch größer als bzw. kleiner als verglichen werden. Folgend alle Syntaktischen Vergleichsoperatoren und deren Bedeutung:
+			
+				Operator		Bedeutung
+				
+				a == b			Gibt true zurück, wenn Ausdruck a Ausdruck b entspricht.
+				a != b			Gibt true zurück, wenn Ausdruck a ungleich Ausdruck b ist.
+				a > b			Gibt true zurück, wenn Ausdruck a größer als Ausdruck b ist.
+				a < b			Gibt true zurück, wenn Ausdruck a kleiner als Ausdruck b ist.
+				a <= b			Gibt true zurück, wenn Ausdruck a kleiner oder gleich b ist.
+				a >= b			Gibt true zurück, wenn Ausdruck a größer oder gleich b ist.
+				
+				Zu beachten ist hier, dass beim Vergleich auf Gleichheit ( == ) von zwei Strings auf Groß- und Kleinschreibung geachtet wird. Der String "Hallo" ist damit nicht gleich dem String "hallo".
+				
+			
+		2.4.3 Logische Operatoren
+		
+			Logische Operatoren geben ebenfalls einen boolschen Wert zurück. Die in C# zur verfügung stehenden logischen Operatoren sind:
+			
+				Operator		Bedeutung							Beispiel
+				
+				!				Unärer Negationsoperator			!a ist true, wenn a false ist. Der Negationsoperator kehrt den Wahrheitswert eines Ausdrucks prinzipiell um.
+				&				And-Operator (1. Variante)			a & b ergibt true, sofern Ausdruck a und Ausdruck b true sind. Hierbei werden beide Ausdrücke ausgewertet.
+				|				Or-Operator (1. Variante)			a | b ist true, sofern a true ist oder b true ist oder beide true sind. Es werden beide Ausdrücke berücksichtigt.
+				^				Xor-Operator						a ^ b ist true, wenn entweder a oder b true ist, sind beide true ist das Ergebnis des Vergleiches false.
+				&&				And-Operator (2. Variante)			a && b ist true, wenn sowohl a als auch b true sind. Sollte a bereits false sein, kommt b garnicht erst zur Ausführung.
+				||				Or-Operator (2. Variante)			a || b ist true, wenn a oder b oder beide true sind. Ist a bereits true, kommt b garnicht erst zur Ausführung.
+				
+			Als Wahrheitstabelle sieht das ganze dann folgendermaßen aus:
+				
+				a		b			And		Or		Xor
+				
+				true	true		true	true	false
+				false	true		false	true	true
+				true	false		false	true	true
+				false	false		false	false	false
+				
+			Logische Operatoren können auch mehrfach in einer Anweisung vorkommen um z.B. komplexere Kontrollstrukturen zu erzeugen:
+			
+				if(x < 5 || y > 20)
+				Console.WriteLine("Bedingung ist erfüllt");
+				
+			
+		2.4.4 Bitweise Operatoren
+		
+			Bitweise Operatoren sind für den Zugriff und die Manipulation der einzelnen Bits eines Operanden. Folgend die zur Verfügung stehenden Operatoren:
+			
+				Operator		Bedeutung
+				
+				~				Invertiert jedes Bit des Ausdrucks (Einerkomplement)
+				|				aus x|y resultiert ein Wert der durch die Veroderung der Bits der beiden Variablen entsteht
+				&				aus x&y resultiert ein Wert der durch die Verundung der Bits der beiden Variablen entsteht
+				^				aus x^y resultiert ein Wert der durch die Xor Verknüfung der Bits der beiden Variablen entsteht
+				<<				dieser Operator verschiebt die Bits aus x um die Anzahl Stellen nach link, die in y gespeichert sind
+				>>				dieser Operator verschiebt die Bits aus x um die Anzahl Stellen nach rechts, die in y gepseichert sind
+				
+				Hierzu folgende Beispiele:
+				
+				a = 13 & 5;
+				Console.WriteLine(a);
+				
+				Die Bitweise Darstellung der Zahlen lautet:
+				
+				13 	= 0000 0000 0000 1101
+				5 	= 0000 0000 0000 0101
+				
+				Durch die Verundung dieser beiden Literale ergibt sich
+				
+				a	= 0000 0000 0000 0101
+				
+			-----	
+				
+				int a = 71 | 49;
+				Console.WriteLine(a);
+				
+				Die Bitweise Darstellung der Zahlen lautet:
+				
+				71	= 0000 0000 0100 0111
+				49	= 0000 0000 0011 0001
+				
+				Durch die Veroderung dieser beiden Literale ergibt sich
+				
+				a	= 0000 0000 0111 0111
+				
+			-----
+			
+				int a = 53;
+				a = a ^ 22;
+				Console.WriteLine(a);
+					
+				Die Bitweise Darstellung der Zahlen lautet:
+					
+				53	= 0000 0000 0011 0101
+				22	= 0000 0000 0001 0110
+					
+				Durch die Xor Verknüpfung dieser beiden Literale ergibt sich
+					
+				a	= 0000 0000 0010 0011
+					
+			-----
+			
+				c = 37 << 2;
+				Console.WriteLine("dezimal    : {0}",c);
+				
+				Bei dem << bzw. >> Operator verschieben wir die Bits von c in diesem Beispiel um 2. Daraus folgt für <<:
+				
+				37	= 0000 0000 0010 0101
+				
+				c	= 0000 0000 1001 0100
+				
+				und für >>:
+				
+				c	= 0000 0000 0000 1001
+				
+				
+		2.4.5 Zuweisungsoperatoren
+		
+			Neben dem Zuweisungsoperator = gibt es noch andere, wobei diese nur als Kurzschreibweise für Rechenoperationen dienen wobei x die empfangende Variable ist. Diese sind:
+			
+			Operator		Beschreibung
+			
+			=				x = y weißt x den Wert von y zu
+			+=				x += y weißt x den Wert von x + y zu
+			-=				x -= y weißt x den Wert von x - y zu
+			*=				x += y weißt x den Wert von x + y zu
+			/=				x /= y weißt x den Wert von x / y zu
+			%=				x %= y weißt x den Wert von x % y zu
+			&=				x &= y weißt x den Wert von x & y zu
+			|=				x |= y weißt x den Wert von x | y zu
+			^=				x ^= y weißt x den Wert von x ^ y zu
+			<<=				x <<= y weißt x den Wert von x << y zu
+			>>=				x >>= y weißt x den Wert von x >> y zu
+			
+		
+		2.4.6 Stringverkettungen
+		
+			Sobald einer der genutzten Operanden vom Typ string ist sorgt der + Operator für eine Zeichenverkettung. Das Ergebnis ist immer ein string, was faktisch bedeutet, dass ein Operant der nicht vom Typ string ist implizit in diesen konvertiert wird.
+			
+		
+		2.4.7 Sonstige Operatoren
+		
+			Operator			Beschreibung
+			
+			.					Der Punktoperator wird für den Zugriff auf Eigenschaften oder Methoden von Klassen verwendet
+			[]					Der [] Operator wird für Arrays, Indexer und Attribute verwendet
+			()					Dieser Operator wird entweder zur Bestimmung der Reihenfolge von Operationen oder zur Typkonvertierung verwendet
+			?:					Dies ist die Kurzschreibweise einer if Anweisung
+			new					Dient zur Instanziierung einer Klasse
+			is					Prüft den Laufzeittyp eines Objekts mit einem angegebenen Typ
+			typeof				Ruft das System.Type Objekt für einen Typ ab
+			checked/unchecked	Steuert die Reaktion der Laufzeitumgebung bei einem arithmetischen Überlauf
+			
+			
+	2.5 Datenfelder (Arrays)
+		2.5.1 Die Deklaration und initialisierung eines Arrays
+		
+				int [] elements;
+				
+			Initialisiert ein array das Werte vom Typ int enthalten wird. Das array an sich wird durch die eckigen Klammern erzeugt. Danach folgt der Beszeichner des Arrays. Da ein Array wie ein Objekt behandelt wird, wird dieses wie folgt initialisiert:
+			
+				elements = new int [3];
+				
+				Auch hier ist es möglich wie bei Variablen die Deaklaration mit der Initialisierung zu kombinieren. Hierzu folgende Beispiele:
+				
+				int [] elements = new int [3];
+				
+				Dieses bietet sich immer dann an, wenn zum Zeitpunkt der Deklaration schon feststeht welche Größe das Array haben soll.
+				
+				Ist zum Zeitpunkt der Deklaration schon klar, welche Werte im Array gespeichert werden sollen bietet sich folgende Schreibweise an:
+				
+				int [] elements = new int [4] {2, 54, 5, 23};
+				
+				In diesem Fall kann der Inhalt der eckigen Klammer auch leer gelassen werden, da anhand der vergebenen Werte dieser automatisch erstellt wird.
+				
+				Die kürzeste Schreibweise wäre:
+				
+				int [] elements = {32, 5, 76, 2};
+				
+			Entscheidet man sich dafür Werte anzugeben die gespeichert werden sollen und gibt außerdem die Gesamtanzahl der Werte des Arrays an ist zu beachten, dass alle angegebenen Werte angegeben werden müssen. Definieren wir also ein Array mit 4 Einträgen und geben einen Wert zur speicherung an, müssen die 3 anderen auch angegeben werden.
+			
+			
+		2.5.2 Der Zugriff auf Array Elemente
+			
+			Gegeben sei folgendes Array:
+			
+				int [] elements = new int [3];
+				
+			Da dieses deklariert und intialisiert wurde, stehen schon Einträge in den Speicherplätzen, da jeder Speicherplatz eines Arrays mit 0 vorinitialisiert wird. Wollen wir den einzelnen Speicherbereichen nun Werte zuweisen geschieht dies durch die folgende Syntax:
+			
+				elements[0] = 55;
+				
+			Dementsprechend greifen wir mit
+			
+				int value = elements[0];
+				
+			auf den Wert an der ersten Stelle des Arrays (55) zu und speichern diesen in der Variable value.
+			
+			
+		2.5.3 Mehrdimensionale Arrays
+		
+			Stellt man sich ein eindimensionales Array vor, so denkt man an eine Rheie von Werten auf einer Geraden. Ein Zweidimensionales Array entspricht dann einer Matrix mit Reihen und Spalten. Ein Array kann theoretisch unendlich viele Dimensionen haben.
+			
+			Die folgende Syntax definiert ein zweidimensionales Array:
+			
+				int [,] elements = int [3,2] {{2, 3},{1, 5},{25, 57}};
+				
+				Wie wir sehen wird die Zuweisung von Literalen komplexer mit Erhöhung der Dimensionen. Es ist hierbei wichtig, eine gute Formatierung des Codes einzuführen. Hierzu ein dreidimensionales Array:
+				
+				int [,,] elements = {
+										{{1, 3, 15, 6}, {4, 9,56, 4}, {7, 30, 46, 2}}
+										{{3, 65, 12, 2}, {45, 6, 89, 3}, {2, 90, 46, 12}}
+									};
+				
+				Dieses Beispiel entspricht einem Array elements[2,3,4]. Wollen wir nun auf die Elemente innerhalb der Arrays zugreifen, so müssen wir jede Dimension des Arrays angeben. Das führt dazu, dass
+				
+					Console.WriteLine(elements[1,1,1]);
+					
+				die Zahl 6 ausgiebt.
+				
+		2.5.7 Verzweigte Arrays
+			
+			Neben den unterschiedlichen Dimensionen eines Arrays gibt es auch die Möglichkeit ein Array in einem anderen Array zu Speichern. Dies wird dann als verzweigtes Array bezeichent. Die Deklaration eines Verzweigten Arrays ist etwas komplizierter und kann z.B. folgendermaßen aussehen:
+			
+				int [][] myArr = new int [4][];
+
+				Diese Deklaration sagt aus, dass wir es hier mit einem Array zu tun haben, welches 4 Einträge hat, die ihrerseits wieder Arrays sind. Jedes Array innerhalb des myArr Arrays muss für sich initialisiert werden. Dieses könnte wie folgt aussehen:
+				
+				myArr[0] = new int [3];
+				myArr[1] = new int [7];
+				myArr[2] = new int [2];
+				myArr[3] = new int [4];
+				
+				Sind die Werte bekannt, kann auch gleich literalinitialisiert werden:
+				
+				myArray[0] = new int[3]{1,2,3};
+				myArray[1] = new int[7]{1,2,3,4,5,6,7};
+				myArray[2] = new int[2]{1,2};
+				myArray[3] = new int[4]{1,2,3,4};
+				
+			Bei Zugriff auf verzweigte Arrays ist zu beachten, dass als erstes das Unterarray anzugeben ist und dann der Index desselben Unterarray auf den zugegriffen werden soll:
+			
+				Console.WriteLine(myArr[3][3]);
+				
+				Hiermit würde für unser obiges Beispiel die Zahl 4 ausgegeben werden.
+				
+			Verzweigte Arrays können auch mehrdimensional sein. Hierzu ist folgende Syntax zu verwenden:
+			
+				int [][,] myArr = new int [2][,];
+				
+				Zu erkennen ist hier, dass das erste eckige Klammernpaar für die Anzahl der Arrays steht und das zweite für die Dimensionen.
+				
+	
+	2.6 Konsolenstrukturen
+		2.6.1  Die »if«-Anweisung
+			
+			Die allgemeine Syntax einer if Anweisung lautet
+			
+				if(Bedingung){
+					Anweisung
+				}
+				else{
+				Anweisung
+				}
+				
+			Bei der if Anweisung handelt es sich um eine simple Fallunterscheidung. Als Bedingung können vergleichs als auch logische Operatoren eingesetzt werden, da die Bedingung immer einen boolschen Wert zurückgibt.
+			
+			If Anweisungen lassen sich beliebig oft schachteln um komplexere Fallunterscheidungen durchführen zu können. Dies stellt uns jedoch vor ein Problem.
+			
+				Console.Write("Geben Sie eine Zahl zwischen 0 und 9 ein: ");
+				int zahl=Convert.ToInt32(Console.ReadLine());
+				if(zahl >= 0 && zahl <= 9)
+				if(zahl <= 5)
+				Console.Write("Die Zahl ist 0,1,2,3,4 oder 5");
+				else 
+				Console.Write("Die Zahl ist unzulässig.");
+				
+				Da wir in diesem Beispiel ohne Anweiungsblöcke arbeiten kommen wir zu einem logischen Fehler. Da das else optional ist und nur in der äußeren Schleife vorkommen soll entsteht hier ein Fehler, da das else hierbei an das innere if gebunden ist. Ein else ist immer an das nächstgelegene if gebunden. Aus diesem Grund ist es wichtig Anweisungblöcke zu verwenden.
+				
+			Es ist möglich eine andere Schreibweise der if Anweisung zu nutzen. Hierbei handelt es sich um folgende allgemeine Syntax:
+			
+				<Variable> = <Bedingung> ? <Wert1> : <Wert2>
+				
+				Wie zu erkennen ist, spart diese Schreibweise zwar Platz, ist aufgrund ihrer nur schwer zu formatierenden Syntax extrem unübersichtlich und eignet sich ausschließlich für sehr kurze Fallunterscheidungen in der einer Variablen gleich ein Wert zugewiesen werden soll. Rein technisch ist auch hier die verschachtelung möglich, aufgrund besagter Unübersichtlichkeit ist jedoch auf jeden fall davon abzuraten.
+				
+		2.6.2 Das »switch«-Statement
+		
+			Das switch Statement läuft änlich wie das if ab. Hierbei wird zu einem nach dem switch stehenden Ausdruck eine Fallunterscheidung in Konstanten, sogenannten cases, unterschieden. Der Compiler prüft einen case nach dem anderen und führt diesen durch, sobald die Konstante erfüllt ist. Die allgemeine Syntax lautet:
+
+				switch(Ausdruck) {
+					case Konstante1 :
+
+					// Anweisungen
+
+					Sprunganweisung;
+					case Konstante2 :
+
+					// Anweisungen
+
+					Sprunganweisung;
+					...
+					[default:
+
+					// Anweisungen
+
+					Sprunganweisung;]
+				}
+				Bei der Sprunganweisung handelt es sich entweder um die Anweisung break, welche die switch Fallunterscheidung abbricht oder goto welches einen Sprung von einem case in einer anderen erlaubt.
+				
+			Die goto Anweisung kann auch außerhalb eines switch statements genutzt werden, sollte allgemein aber vermieden werden, da dies als schlechter Programmierstil angesehen wird.
+			Die allgemeine goto Anweisung die auf eine sogenannte Marke verweist sieht folgendermaßen aus:
+			
+				goto Markenbezeichner;
+				
+				[...]
+				
+				Markenbezeichner:
+				
+				Wie zu erkennen ist, wird nach der Marke auf die gesprungen wird ein Doppelpunkt geschrieben und der jeweils darauffolgende Code als nächstes ausgeführt.
+				
+	2.7 Programmschleifen
+		2.7.1 Die »for«-Schleife
+			
+			Die for Schleife wird meist dann eingesetzt wenn klar ist, wie oft die durchzuführende Anweisung auszuführen ist. Die allgemeine Syntax einer for Schleife sieht folgendermaßen aus:
+			
+				for(Initialisierungsausdruck; Bedingungsausdruck; Reinitialisierungsausdruck){
+				
+				//Anweisung
+				
+				}
+				
+				Wie zu sehen ist, besteht eine Schleife aus zwei Teilen. Der obere Teil wird Schleifenkopf, der Anweisungsblock hingegen Schleifenkörper genannt. Der Schleifenkopf wiederum besteht aus drei Teilen. Der initialisierung einer Zählervariablen (dies wird nur beim ersten Aufruf der Schleife gebraucht), dem Bedingungsausdruck (dieser wird vor jeder Durchführung des Schleifenkörpers geprüft) und dem Reinitialisierungsausdruck (dies ist der Wert um den die Zählervariable verändert werden soll. Dieser Wert wird nach jedem Durchlauf der Schleife durchgeführt).
+				
+			Es ist wie bei der if Anweisung auch bei Schleifen im allgemeinen möglich diese zu verschachteln. 
+			
+			Durch die break Anweisung ist es uns wie innerhalb des switch Statements möglich die Schleife vorzeitig zu beenden. Die Anweisung continue gibt uns die Möglichkeit einen Anweisungsblock innerhalb einer Schleife zu beenden ohne jedoch die Schleife selbst zu beenden. Sobald ein continue erreich wurde, wird der Rest eines Anweisungsblockes zwar ignoriert, jedoch wird die Steuerung an den Schleifenkopf übergeben.
+			
+		2.7.2  Die »foreach«-Schleife
+		
+			Die foreach Schleife ist eine Weitere Methode um mit Arrays zu arbeiten. Die allgemeine Syntax dieser Schleife lautet:
+			
+			foreach(Dateityp Bezeichner in Arraybezeichner){
+			
+			}
+			
+			Wie wir sehen ist in dieser Schleife keine Initialisierung eines Zählers nötig, da wir mit dem Bezeichner eine Variable festlegen, die jedes Element im angegebenen Array durchlaufen wird. Wichtig hierbei ist außerdem, dass die Angabe des Datentyps vor dem Variablenbezeichner Pflicht ist.
+			
+		2.7.3  Die »do«- und die »while«-Schleife
+		
+			Die while Schleife wird immer dann benutzt, wenn erst zur Laufzeit feststeht wie oft diese durchlaufen werden soll. Die allgemeine Syntax einer while Schleife lautet:
+			
+				while(Bedingung){
+				
+				//Anweisung
+				}
+				
+				Wie wir sehen gibt es innerhalb des Kopfes dieser Schleife kein Abruckkriterium was bedeutet, dass wir innerhalb des Anweisungsblockes einen Mechanismus einbauen müssen, der diese Aufgabe übernimmt.
+			
+			Auch in dieser Schleifenart haben wir die Möglichkeit mit break, oder continue die Schleife entweder ganz zu beenden bzw. vorzeitig die Steuerung an den Kopf der Schleife zu übergeben. Es ist zu beachten, dass der Anweisungsblock der Schleife nur solange durchgeführt wird, wie die Bedingung den Wert true zurückgibt. Ist beim ersten Aufruf der Schleife die Bedingung nich true wird die darin enthaltene Anweisung nie ausgeführt.
+			
+			Bei der do Schleife verhällt es sich etwas anders. Diese Schreibt die Anweisung an die erste Stelle und prüft erst im Nachhinein ob die die Bedingung noch gegeben ist. Dies sorgt dafür, dass der Anweisungsblock bei einer do Schleife auf jeden Fall mindestens einmal durchlaufen wird. Die allgemeine Syntax einer do Schleife lautet:
+			
+				do{
+				
+					//Anweisung
+					
+				}
+				while(Bedingung);
+				
+3 Das Klassendesign
+	3.1 Einführung in die Objektorientierung
+		
+		Eine Klasse ist wie ein Bauplan zu verstehen. Sie dient als Vorlage. Ein Objekt ist ein Element welches etwas konkretes durchführen kann, es spiegelt sozusagen das fertige Produkt geschaffen aus der Klasse wieder. Ein Objekt hat charakteristische Merkmale die als Eigenschaften bezeichnet werden. 
+		Wie im Fall von Variablen ist auch bei der Deklaration eines Objektes die Angabe des Datentyps zwingend erforderlich. Hierbei ist zu beachten, dass eine Klasse immer als Beschreibung eines Datentyps anzusehen ist. Bei einer Klasse namens Person können wir das Person-Objekt Peter also wie folgt definieren:
+		
+			//Definition der Klasse
+			class Person{
+			
+			public string Name;
+			public int Alter;
+			
+			public void Laufen();
+			
+			}
+			
+			//Deklaration und Initialisierung des Objekts vom Typ Person
+			Person peter = new Person();
+			
+			Wie wir hier sehen können sind in der Klasse Person unterschiedliche Dinge enthalten. Name und Alter sind Eigenschaften die genutzt werden können und die man als Felder bezeichnet. Laufen() ist eine Methode innerhalb von Person, die vom Person-Objekt peter genutzt werden kann.
+			
+		Mit new erstellen wir eine Instanz von Person und können damit auf die Felder und Methoden davon zugreifen. Wir können Objekte innerhalb von Methoden (zum Beispiel der Main Methode) verwenden um damit zu arbeiten. Hierfür reicht es aus den Bezeichner innerhalb der Methode zu nutzen. Wir können mit dem Punktoperator Felder oder Methoden aufrufen um diese zu nutzen. Wollen wir mehrere Person-Objekte erstelle müssen wir für jedes eine eigene Instanz erstellen. So können wir zum Beispiel den folgenden Beiden Person-Objekten ein unterschiedliches Alter zuweisen:
+		
+		
+			static void Main(string[] args) {
+			Person peter = new Person();
+			Person britta = new Person();
+			
+			peter.Alter = 32
+			britta.Alter = 21
+			
+			}
+			
+		Nicht jede Eigenschaft einer Klasse muss innerhalb eines Objektes einen Wert erhalten, nur die, die wir im Code nutzen. Damit haben wir die Möglichkeit eine Klasse zu schreiben die sehr viele Eigenschaften und Methoden enthällt aus der dann verschiedene Objekte erzeugt werden, die unterschiedliche Dinge tun können.
+		
+	3.2 Die Klassendefinition
+		3.2.3 Deklaration von Objektvariablen
+			
+			Jedes Objekt benötigt einen Bezeichner. Dieser wird Objektvariable genannt. Die Deklaration einer Objektvariablen ist der einer normalen sehr ähnlich. Erst folgt der Datentyp der Variablen. Da ein Objekt immer bestimmte Eigenschaften und Methoden einer Klasse repräsentiert funktioniert hier die Klasse (wie bereits erwähnt) als Datentyp. Eine Objektvariable ist eine Referenz auf den Speicherplatz in dem sich die Eigenschaften eines Objektes befinden. Deshalb spricht man bei der Objektvariablen davon, dass sie ein Objekt referenziert. Es bildet also eine Instanz aus der Klasse aus der es entsteht. Mit der Deklaration der Objektvariablen wird der Speicherplatz reserviert, das Objekt selbst existiert jedoch noch nicht, da dieses noch nicht initialisiert wurde. Bei der Initialisierung der Objektvariablen verfahren wir wie beim Initialisieren jeder anderen Variablen. Wir haben also folgende beiden Initialisierungsmöglichkeiten:
+				
+				Circle kreis;
+				kreis = new Circle();
+				
+			und
+				
+				Circle kreis = new Circle();
+				
+			Wie wir sehen können nutzen wir bein Initialisieren eines Objektes den Operator new. Erst mit diesem Operator existiert das Objekt. Außerdem ruft new eine ganz bestimmte Methode innerhalb der Klasse die als Konstruktor bezeichnet wird. Dazu später mehr.
+			
+			Bei der Deklaration sowie der Initialisierung eines Objekts gelten ähnliche Regeln wie bei normalen Variablen. Dies bedeutet, dass wir auch mehrere Objekte aus einer Klasse kommagetrennt in einer Zeile Deklarieren und gegebenenfalls auch schon dort initialisieren können. Hierzu folgendes Beispiel:
+			
+				Circle kreis1, kreis2 = new Circle(), kreis3;
+				
+			Hierbei ist zu beachten, dass nur kreis2 schon während der Deklaration initialisiert wurde. Kreis1 und kreis2 müssen trotzdem noch initialisiert werden, wenn sie genutzt werden sollen.
+			
+		3.2.4 Zugriffsmodifizierer einer Klasse
+		
+			Beim Entwerfen einer Klasse muss man sich vorher überlegen, diese nur innerhalb der Anwendung zur Verfügung stehen soll in der sie geschrieben wurde oder ob auch anderen Anwendungen darauf zugreifen können sollen. Hierzu gibt es zwei Zugriffmodifizierer. Diese heißen public und internal.
+			
+			Klasse die den Status public haben können auch von anderen Anwenundungen genutzt werden. Faktisch bedeutet das, dass jeder beliebigen Anwendung die Möglichkeit gegeben wird ein Objekt aus dieser Klasse zu instanziieren um mit diesen dann zu arbeiten.
+			
+			Bei Klassen mit dem Status internal steht nur der Anwendung in der sich die Klasse befindet die Möglichkeit offen ein Objekt daraus zu instanziieren und zu nutzen.
+			
+			Man bezeichnet dies auch als Sichbarkeit einer Klasse.
+			
+		3.2.5 Splitten einer Klassendefinition mit »partial«
+		
+			Es ist Möglich die Defintion einer Klasse auf mehrere Datein aufzuteilen. Hierfür wird der Modifizierer partial genutzt. Die Aufteilung in Segmente gibt Entwicklern die Möglichkeit gleichzeitig an ein und der selben Klasse zu arbeiten. Zur Nutzung von partial folgendes Beispiel:
+			
+				//Definition der Klasse Circle in der Quellcodedatei Circle1.cs
+				
+				partial class Circle [
+					[...]
+				}
+				
+				//Definition der Klasse Circle in der Quellcodedatei Circle2.cs
+				
+				partial Class Circle [
+					[...]
+				}
+			
+			Zu beachen ist, dass es vom Code her keinerlei unterschied geben darf, sodass die einzelnen teile einer Klasse problemlos zusammengesetzt werden können. Weiterhin ist zu beachten, dass eine Aufteilung mit partial zwar auf verschiedene Datein geschehen kann, sich aber trotzdem in der gleichen Anwendung befinden muss um zu funktionieren.
+			
+		3.2.6 Arbeiten mit Objektreferenzen
+		
+			Prüfen auf Initialisierung
+				
+				Eine Objektvariable gilt genau dann al initialisiert, sobald sie ein Objekt referenziert oder den Wert null beschreibt. Es ist also neben der oben beschriebenen Initialisierung auch möglich 
+				
+					Circle kreis = null
+					
+				zu verwenden um das Objekt kreis mit dem Wert null vor zu initialisieren.
+				
+				Mit dem Statment
+				
+					if (kreis == null) {
+						Console.WriteLine("Das Objekt existiert nicht");
+					}
+					else{
+						Console.WriteLine("Das Objekt existiert");
+					}
+					
+				lässt sich überprüfen ob ein Objekt bereits initialisiert wurde oder nicht. Zu beachten ist hierbei, dass Eigenschaften und Methoden eines Objektes jedoch nur genutzt werden können, sofern wirklich ein Objekt referenziert wurde und nicht mit null vorinitialisiert wurde.
+				
+				Freigabe eines Objekts
+				
+					Objekte belegen Speicher. Sollte es also dazu kommen, dass ein Objekt nicht mehr benötigt wird, sollte der Objektvariablen der Wert null zugewiesen werden. Hiermit wird das Objekt nicht gelöscht, jedoch wird die Referenz auf dieses Objekt entfernt, was dazu führt, dass keinerlei Zugriff darauf mehr Möglich ist. Später wird der Garbage Collector jedoch den Speicher auf auf nicht mehr referenzierte Objekte überprüfen und löschen.
+					
+				Mehrere Referenzen auf ein Objekt
+				
+					Mit der Zuweisung
+					
+						Circle kreis1 = new Circle();
+						Circle kreis2 = kreis1;
+						
+					wird mit kreis1 ein Objekt aus der Klasse Circle Instanziiert und erst der Objektvariablen keis1 zugewiesen. Danach wird mit der zu erkennenden Zuweiseung der Objektvariablen kreis2 eine Referenz auf kreis1 zugewiesen. Es wurde also nur ein Objekt erzeugt auf das von zwei verschiedenen Objektvariablen zugegriffen werden kann. Beide Referenzen haben den gleichen Status, das heißt es ist von beiden aus möglich das Objekt zu manipulieren, Werte ausgeben zu lassen oder sontige Operationen durchführen zu lassen.
+					
+					Beim Freigeben eines Objektes mit mehreren Referenzen ist zu beachten, dass es erst dann wirklich freigegeben ist, wenn jede einzenere Objektvariable den Wert null erhällt.
+					
+		3.3 Referenz- und Wertetypen
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			
+		
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+				
