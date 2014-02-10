@@ -802,6 +802,17 @@
 					}
 				
 				Dieses Prinzip wird ganz allgemein als Datenkapselung bezeichnet. Es ist zu beachten, dass wir innerhalb der set Operation einen Parameter namens value nutzen. Dieser muss auch immer value lauten und nimmt automatisch den richtigen Datentyp an. In unserem Beispiel ist value also vom Typ int.
+				
+			3.4.4 Lese- und schreibgeschützte Eigenschaften
+			
+				Eigenschaften können schreib- bzw. lesegeschützt sein in dem man entweder die set oder die get Operation nicht angiebt. Die fehlende Operation kann zum Beispiel von einer anderen Methode durchgeführt werden. Auf diese weise ist es möglich zu verhindern, dass aus einer bestimmten Methode heraus ein Wert zum Beispiel manipuliert wird.
+				
+			3.4.5 Sichtbarkeit der Accessoren get und set
+			
+				Standartmäßig haben die Accessoren get und set die gleiche Sichbarkeit wie die Eigenschaftsmethode in der sie stehen. Es ist jedoch möglich eine abweichende Sichtbarkeit anzugeben. Hierbei ist zu beachten, dass nur einer der Accessoren einen abweichenden Zugriffsmodifizierer haben darf. Des Weiteren müssen beide Accessoren angegeben sein, wenn einer davon eine abweichende Sichtbarkeit aufweisen soll. Letztlich muss der Zugriffsmodifizierer der Accessoren einschränkender sein als der der Eigenschaftsmethode.
+				
+		3.5 Methoden eines Objekts
+			3.5.1 Methoden mit Rückgabewert
 			
 				
 				
