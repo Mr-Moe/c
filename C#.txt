@@ -735,6 +735,73 @@
 					Beim Freigeben eines Objektes mit mehreren Referenzen ist zu beachten, dass es erst dann wirklich freigegeben ist, wenn jede einzenere Objektvariable den Wert null erhällt.
 					
 		3.3 Referenz- und Wertetypen
+			3.3.1 Werte- und Referenztypen nutzen
+				Der Unterschied zwischen Werte- und Referenztypen liegt in der Bereitstellung von Speicher (Allokierung). Variablen die einen Wertetyp repräsentieren allokieren auf dem sogenannten Stack Speicherplatz für die Daten. Der Stack befindet sich im RAM und wird vom direkt vom Prozessor mit einem sogenannten Stackpointer unterstützt. Dieser ist in der Lage Speicher zu reservieren und freizugeben. Dadurch kann der Stack sehr schnell und effizient arbeiten. Referenztypen werden auf dem sogenannten Heap. Als Heap wird der Speicher im RAM bezeichnet der allgemeinen Zwecken zur Verfügung steht.
+				
+				Wird zum Beispiel die Variable
+				
+					int value = 100;
+					
+				deklariert und intialisiert wird auf dem Stack der benötigte Speicher reserviert, da int als Struktur definiert ist. Hierbei ist zu beachten, dass der Operator new nicht gesetzt werden muss. Bei einem Referenztyp ist dies unverzichtbar da erst mit
+				
+					Circle kreis = new Circle();
+					
+				Speicher auf den Heap reserviert wird auf den die Referenz kreis zeigt.
+				
+				Daraus folgt, dass eine Referenz nie den Wert null haben kann.
+				
+		3.4 Eigenschaften eines Objekts
+			3.4.1 Öffentliche Felder
+			
+				Ein Objekt unterscheidet sich von einem Typgleichen Objekt durch dessen charakteristischen Eigenschaften. Ein spezifisches Objekt kann mehr/weniger und vollkommen andere Eigenschaften haben als ein typgleiches anderes Objekt. Dies liegt immer daran, welche Vorraussetzungen an das Objekt gestellt werden. Da jedes Objekt bekanntermaßen eine Instanz einer Klasse dastellt müssen alle Eigenschaften die an die einzelnen Objekte gestellt werden innerhalb der Klasse aus der instanziiert wird berücksichtigt werden/vorhanden sein. Hierzu werden die Werte in Variablen gespeichert die vorher in der Klasse definiert wurden. Welche Eigenschaften einer Klasse jedes einzelne Objekt nutzt liegt wie bereit erwähnt in der Vorraussetzung, die an das Objekt gestellt wird.
+				
+				Eigenschaften/Felder sind nichts anderes als Variablen die innerhalb einer Klasse definiert wurden. Der Unterschied zu einer Variablen innerhalb einer Methode ist dessen Sichtbarkeit. Definieren wir zum Beispiel ein Feld Radius wie folgt
+				
+					public int Radius;
+					
+				ist diese durch den Zugriffsmodifizierer public, so steht dieses Feld überall zur Verfügung und kann auch von anderen Klassen und/oder Objekten etc. genutzt bzw. manipuliert werden. Es ist zu beachten, dass ein Feld, sofern es nicht mit einer Zahl initialisiert wurde immer mit einem Standartwert vorinitialisiert. In diesem Beispiel ist
+				
+					public int Radius;
+				
+				also das gleiche wie
+				
+					public int Radius = 0;
+					
+				Um auf eine Eigenschaft zugreifen zu können müssen wir nur den Objektnamen einen Punkt (.) und danach den Eigenschaftsbezeichner angeben. Wir instanziieren also als erstes ein Objekt 
+				
+					Circle kreis = new Circle();
+					
+				und weisen dann dem Radius mit
+				
+					kreis.Radius = 10;
+					
+				den Wert 10 zu.
+				
+			3.4.2 Datenkapselung mit Eigenschaftsmethoden sicherstellen
+			
+				In unserem gewählten beispiel haben wir nciht berücksichtigt, dass auch ein negativer Wert in die Eigenschaft Radius geschrieben werden könnte was keinen Sinn macht. Um eine Prüfung durchzuführen bieten sich sogenannte Eigenschaftsmethoden an. Diese Eigenschaftsmethoden haben jeweils zwei seperate Subroutinen die je nach Bedarf ausgeführt werden. Diese heißen set und get. Soll einem Feld ein Wert zugewiesen werden, so nutzen wir die set Operation, soll hingegen der Wert ausgewertet werden, so wird die get Operation ausgeführt.
+				
+				Es ist zu beachten, dass wir der Eigenschaftsmethode den Namen des eigentlichen Feldes geben und dem Feld selbst mit einem Unterstrich vor dem Bezeichner umbenennen um einem Bezeichnerkonflikt aus dem Weg zu gehen. Des Weiteren ist es ratsam das Feld mit dem Zugriffsmodifizierer private insofern einzuschrenken, dass es nurnoch innerhalb der Klasse sichtbar ist in der es definiert wurde und auch nur von dort manipuliert werden kann, da wir der Eigenschaftsmethode den Zugriffsmodifizierer public geben. Die Implementierung eines solchen Prüfmechanismus könnte wie folgt aussehen:
+				
+					public class Circle {
+						private int _Radius
+						
+						public int Radius {
+							set {
+								if (value <= 0) {
+									_Radius = value;
+								}
+								else{
+									Console.WriteLine("Der Radius muss einen positiven Wert haben");
+								}
+							}
+							get{
+								return _Radius;
+							}
+						}
+					}
+				
+				Dieses Prinzip wird ganz allgemein als Datenkapselung bezeichnet. Es ist zu beachten, dass wir innerhalb der set Operation einen Parameter namens value nutzen. Dieser muss auch immer value lauten und nimmt automatisch den richtigen Datentyp an. In unserem Beispiel ist value also vom Typ int.
 			
 				
 				
