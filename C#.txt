@@ -814,38 +814,120 @@
 		3.5 Methoden eines Objekts
 			3.5.1 Methoden mit Rückgabewert
 			
+				Die allgemeine Syntax einer Methode mit Rückgabewert sieht wie folgt aus:
 				
+					[Modifizierer] Typ Bezeichner ([Parameterliste]) {
+						[...]
+						return Wert;					
+					}
 				
+				Der Modifizierer kann entweder ein Zugriffsmodifizierer sein oder die Methoder weiterführend beeinflussen, zum Beispiel für die Vererbung. Der Modifizierer einer Methode ist jedoch optional. Folgende Zugriffsmodifizierer stehen zur Verfügung:
 				
+					public					Die Methode kann von überall aus aufgerufen werden
+					private					Die Methode kann nur innerhalb der Klasse in der Sie erstellt wurde genutzt werden
+					protected				Die Methode steht nur innnerhalb dieser und für abgeleitete Klassen zur Verfügung
+					internal				Die Methode steht nur Programmcode innerhalb der Anwendung zur Verfügung in der sie definiert ist
+					protected internal		Stellt eine Kombination der Beiden Modifizierer protected und internal dar.
+					
+				Zu beachten ist, dass eine Methode bei der auf einen Zugriffsmodifizierer verzichtet wird automatisch als private definiert wird.
 				
+				Methoden können als Folge eines Aufrufs ein Ergebnis an den Aufrufer zurückliefern. Hierzu wird der Operator return genutzt. Kommt es zur Ausführung der Programmzeile die den return Operator beinhaltet wird der Wert zurückgegeben und an die aufrufende Stelle zurückgegeben. Das führt dazu, dass Programmcode innerhalb einer Methode der nach dem return Operator steht nicht mehr ausgeführt wird. Gegeben sei folgende Methode die innerhalb der Klasse Circle die Grundfläche berechnet:
 				
+					public class Circle {
+						[...]
+						int Radius = 12;
+						
+						public double GetArea() {
+							double area = Math.Pow(Radius, 2) * Math.PI;
+							return area;
+						}
+					}
 				
+				Wie Zu sehen ist, wird eine public Methode mit einem Großbuchstaben benannt und besteht weiterhin aus einer aussagekräftigen Kurzbeschreibung Ihrer Funktion. Dabei ist zu beachten, dass aus Gründen der besseren Lesbarkeit für jedes Wort das genutzt wird jedes Wort mit einem Großbuchstaben beginnt.
+				Um den Code kürzer zu halten ist es außerdem möglich eine Operation innerhalb der Zeile zu vollziehen inder der return Operator gesetzt ist. Hierbei ist wichtig, dass der Wert der Operation den gleichen Datentypen zum Ergebnis hat, der beim Methodenaufruf verlangt wird oder alternativ in diesen impliziert konvertiert werden kann. Ist dies nicht gegeben muss eine expliziete Konvertireung vorgenommen werden!
+				Der folgende Code führt also zum gleichen Ergebnis wie der oben angegebene:
 				
+					publich class Circle {
+						[...]
+						int Radius = 12;
+						
+						public double GetArea() {
+							return Math.Pow(Radius, 2) * Math.PI;
+						}
+					}
 				
+				Somit ist es möglich eine Methode wie eine Variable zu behandeln, da diese einen Konkreten Wert zurückgibt. Uns ist damit die Möglichkeit gegeben, mit dem Aufruf einer Methode weiterzurechnen. Hierzu folgendes Beispiel:
 				
+					Circle kreis = new Circle();
+					kreis.Radius = 10;
+					int height = 30;
+					double volume = kreis.GetArea() * height;
 				
+				Es ist nicht zwingend erforderlich den Rückgabewert einer Methode in einer Variablen zu speichern. So kann zum Beispiel in einer Konsolenanwendung durch den Console.WriteLine Befehl direkt eine Methode mit Rückgabewert angegeben werden, die dann wie eine Variable das Ergebnis an die Konsole weitergibt. Der Rückgabewert einer Methode muss nicht zwangsläufig entgegengenommen werden, sondern kann auch einfach ignoriert werden.
 				
-				
-				
-				
-				
-				
+			3.5.2 Methoden ohne Rückgabewert
 			
-		
-		
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+				Allgemeine Syntax einer Methode ohne Rückgabewert:
 				
+					[Modifizierer] void Bezeichner ([Parameterliste]) {
+						[...]
+					}
+				
+				Hierbei ist zu beachten, dass an Stelle des Datentyps einer Methode das Schlüsselwort void steht. Der return Operator kann jedoch auch in Methoden ohne Rückgabewert genutzt werden um diese zu terminieren.
+			
+			3.5.3 Methoden mit Parameterliste
+			
+				Für manche Methoden ist es notwendig, dass sie für den Durchlauf dateninformationen benötigen. Hierzu dient die Parameterliste die bei der Definition der Methode angegeben wird. Parameter werden wie Variablen definiert. Folgend ein Beispiel für eine Methode mit Parametern:
+				
+					public void Move(double dx, double dy) {
+						XCoordinate += dx;
+						YCoordinate += dy;
+					}
+					
+				In dieser Methode namens Move werden die X bzw. Y Koordinaten verändert. Um die neuen Koordinaten berechnen zu können müssen vorher die alten angegeben werden.
+				
+			3.5.4 Methodenüberladung
+			
+				Eine Methode kann mehr als einmal unter dem gleichen Bezeichner geführt werden. Die Methode wird dann als überladen bezeichnet. Bei der Überladung von Methoden ist zu beachten, dass diese als überladen gilt wenn 
+				
+					sich gleichnamige Methoden in der Anzahl der Parameter unterscheiden oder
+					
+					bei gleicher Parameteranzahl mindestens einer der Parameter einen anderen Datentyp aufweist.
+					
+				Gibt eine Methode ein Ergebnis zurück, dass einen anderen Datentyp besitzt als die andere Methode gilt diese nicht als überladen. Außerdem gilt eine Methode nicht als überladen, wenn sich die Parameter nur im Bezeichner unterscheiden.
+				
+				Kommt es dazu, dass der Compiler die entscheidung fällen muss, welche Methode genutzt wird, so 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
