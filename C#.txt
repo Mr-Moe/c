@@ -896,7 +896,134 @@
 					
 				Gibt eine Methode ein Ergebnis zurück, dass einen anderen Datentyp besitzt als die andere Methode gilt diese nicht als überladen. Außerdem gilt eine Methode nicht als überladen, wenn sich die Parameter nur im Bezeichner unterscheiden.
 				
-				Kommt es dazu, dass der Compiler die entscheidung fällen muss, welche Methode genutzt wird, so 
+				Kommt es dazu, dass der Compiler die entscheidung fällen muss, welche Methode genutzt werden muss kann es bei numerischen Methoden durchaus zu Verwirrung kommen. Gehen wir davon aus, dass wir eine Methode überladen in dem wir dem Parameter einmal den Datentyp int und einmal den Datentyp long definieren. Beim Aufruf der gleichnamigen Methode wird es immer dazu kommen, dass die int Methode aufgerufen wird (es sei denn es wird voher explizit in den Typ long konvertiert), da ein ganzzahliger Wert standartmäßig als int interprätiert wird.
+				
+				Überladene Methoden werden dann genutzt wenn es nötig ist eine Basisfunktionalität unter angabe unterschiedlicher Parameter durchzuführen. Erweitert eine Methode eine andere (besitzt diese zu den in der ersten entahlatenen Parameter noch weitere) so kann man die erste Funktion dazu nutzen, die übergebenen Parameter die diese akzeptiert zu verarbeiten und die zweite Methode nur die erweiterte Funktion selbst verarbeiten lassen. Dies spart Codezeilen und doppelten Code.
+				
+				
+			3.5.5 Variablenö innerhalb einer Methode (lokale Variablen)
+			
+				Variablen die innerhalb einer Methode definiert sind bezeichnet man als lokale Variablen. Diese sind nur innerhalb der geschweiften Klammern der Methode sichtbar. Außerhalb davon sind sie weder bekannt, sichtbar noch können sie manipuliert oder ausgewertet werden. Lokale Variablen sind auch in Schleifen oder anderen Anweisungen wie z.B. dem if Statement zu finden. Auch hier existiert die lokale Variable nur innerhalb der geschweiften Klammern. Werden Statement inerinander geschachtelt (zum Beispiel eine Schleife in einem If) und eine lokale Variable im äußeren KLammernpaar definiert (also im If), steht diese variable auch im untergeordneten Statement (der Schleife) zur Verfügung aber nciht umgekehrt. Die Lebenszeit einer Lokalen Variablen beschränkt sich auf die Dauer der Methodenausführung. Ist die Methode zuende wird die Variable samt ihrem Wert gelöscht. Bei einem neuen Aufruf der Methode wird eine neue lokale Variable erstellt. Es ist zu beachten, dass eine lokale Variable immer initialisiert werden sollte, da die Nutzung einer nicht initialisierten lokalen Variable zu einem Kompilierfehler führt.
+				
+			3.5.6 Referenz- und Werteparameter
+			
+				Parameter ohne zusätzliche Modifizierer
+					
+					Gegeben sei folgendes Teilprogramm:
+					
+						class Program {
+							
+							Static void Main(string[] args) {
+								int value = 3;
+								DoSomething(value);
+								Console.WriteLine("value = " + value);
+								Console.ReadLine();
+							}
+							
+							static void Dosomething(int param) {
+								param = 550;
+							}
+						}
+						
+					Wenn wir und dieses Listing ansehen könnte man denken, dass in der Konsole 550 ausgegeben wird. tatsächlich wird aber 3 ausgegeben. Um zu verstehen warum dies der Fall ist folgende Erklärung.
+					
+					Beim speichern der lokalen Variablen value wird im Speicher auf einer bestimmten Adresse (wir gehen von der Adresse 1000 aus) der benötigte Speicher für ein int allokiert. Dort wird die Zahl 3 hereingeschrieben. Danach wird die Methode DoSomething aufgerufen der als parameter der Wert von Value übergeben wird. Diesem Parameter soll nun der Wert 550 zugewiesen werden. Hierfür wird nochmals Speicher allokiert und zwar auf einer anderen Adresse für die Variable param (wir gehen hier von der Adresse 2000 aus). Es wird also Faktisch der Wert von Adresse 1000 an Adresse 2000 übergeben und dort mit dem wert 550 überschrieben. Nachdem dies geschehen ist wird wie zu sehen ist value ausgegeben. Hierbei ist zu beachten, dass value immernoch in der Adresse 1000 ist und dort den Wert 3 hat, Weshalb in der Konsole auch dieser Wert ausgegeben wird.
+					
+					Dies wird Werteübergabe (engl. Call by value) genannt.
+					
+				Parameter mit dem Modifizierer ref
+				
+					Folgende Modifizierung des gegebenen Teilprogramms sei nun gegeben:
+					
+						DoSomething(ref value);
+						
+						public void DoSomething(ref int param){
+							[...]
+						}
+						
+					Hiermit geben wir an, dass beim Aufruf der Methode DoSomething nicht der Wert an sich, sondern die Speicheradresse übergeben wird. Damit der Parameter der Methode weiß, was er übergeben bekommt muss dieser auch den Modifizierer ref erhalten. Obwohl auch für den Parameter param Speicherplatz allokiert wird (wir gehen wieder von den gleichen Adressen aus) wird jeder Aufruf an die Adresse 2000 and die adresse 1000 weitergeleitet. Value erhält faktisch also den Wert 550 der auch in der Konsole ausgegeben wird.
+					
+					Dies wird als Referenzübergabe (engl. Call by reference) bezeichnet.
+					
+					Wird call by reference genutzt sind folgende Regeln zu bachten:
+					
+						-In der Parameterliste der Methode muss der Modifizierer ref angegeben werden
+						-Im Methodenaufruf muss dem übergebenen Argument der Modifizierer ref vorangstellt werden
+						-Das zu übergebende Argument muss initialisiert sein
+						-Das Übergabeargument darf keine Konstante sein
+						-Das Übergabeargument darf nicht aus einem berechneten Ausdruck in Form eines Methodenaufrufs bezogen werden
+						
+					Das bedeutet im letzten Fall dass
+					
+						@object.DoSomething(ref a, ref obj.ProcB());
+						
+					nicht zulässig ist, da erst mit Aufruf der Methode ein wert berechnet wird der übergeben werden soll.
+					
+				Parameter m8it dem Modifizierer out
+				
+					Der Modifizierer out ähnelt dem Modifizierer ref. Er wird genauso angegeben (bei der Übergabe und in der Parameterliste der Methode) hat aber die Unterschiede, dass bei der Übergabe der Referenz nicht zwingend eine initialisierte Variable dahinterstehen muss. Dementsprechen muss innerhalb einer Methode deren Argumente mit out übergeben werden jedoch eine Wertzuweisung stattfinden.
+					
+					Allgemein ist bei der Nutzung von ref bzw. out zu beachten, dass wir hierbei mit den Orginalwerten arbeiten udn diese manipulieren. Dies kann dazu führen, dass im weiteren Programmverlauf Änderungen vorgenommen werden, die so nicht vorgesehen waren, wenn man ref und out unbedacht einsetzt.
+					
+				Übergabe von Objekten
+				
+					Ein Objekt wird prinzipiell als Referenz übergeben. Dies führt dazu, dass bestimmte Werte innerhalb des Orginalobjekts geändert werden. um dies zu verhindern muss erst eien Kopie des Objekts erstellt werden bevor man Werte darin ändert.
+					
+				Methodenüberladung und Parametermodifizierer
+				
+					Ergänzent zum Teilkapitel über die Überladung von Methoden ist zu erwähnen, dass eine Methode auch als überladen gilt, wenn sie einmal durch call by value und einmal durch call by reference angegeben ist. Als nicht überladen gelten hingegen Methoden von der eine Argumente via ref und die andere via out zugewiesen bekommt, da beides Referenztypen sind.
+					
+			3.5.7 Besondere Aspekte einer Parameterliste
+			
+				Übergabe eines Arrays an die Parameterliste
+				
+					Es ist auch möglich ein Array als Argument an eine Parameterliste einer Methode zu übergeben. dafür wird folgende allgemeine Syntax verwendet:
+					
+						[Zugriffsmodifizierer] [Datentyp] [Methodenbezeichner] ([Datentyp][] [Arraybezeichner]) {
+							[...]
+						}
+						
+				Der Modfizierer params
+				
+					Es kannd urchaus vorkommen, dass noch nicht bekannt ist, wieviele Argumente an die Methode übergeben werden sollen. Oder es soll möglich sein rein theoretisch unendlich viele Argumente als Parameter zu übergeben. Hierfür gibt es den Parameter params. Wird an einen params-Parameter mehr als ein Wert übergeben, so werden diese innerhalb eines Arrays (mit dem bezeichner params) übergeben. Will man zum Beispiel eien Methode schreiben die beliebig viele Zazhlen miteinander addieren kann, so amcht es sinn, params zu nutzen um sicherzustellen, dass beliebig viele Argumente übergeben werden können. Es können trotzdem weitere feste "Einzelparameter" angegeben werden. dies würde für unsere Beispielmethode auch sinn machen, da man eine Addition traditionell mit mindestens zwei Zahlen durchführt.
+					
+				Mit dem params-Parameter gehen folgende Regeln einher:
+				
+					-in der Parameterliste darf nur ein Parameter mit params festgelegt werden
+					-ein Params-Parameter steht immer an letzter Stelle in einer Parameterliste
+					-eine Kombination mit den Modifikatoren ref und out is unzulässig
+					-ein params parameter ist grundsätzlich eindimensional
+					
+				Zum letzten Punkt ist zu sagen, dass das params Array anhand der übergebenen Werte automatisch dimensioniert wird.
+				
+				Um dem params Parameter Werte zuzuweisen gibt es zwei Möglichkeiten. Entweder übergibt man die Referenz auf einen Wert oder man übergibt einfach mehrere Werte.
+				
+			Optionale Parameter
+			
+				Bei optionalen Parametern handelt es sich um Parameter denen schon in der Parameterliste ein Standartwert zugewiesen wurde. Damit bleibt dieser Parameter solange auf diesem Wert bis ihm bei einem Methodenaufruf explizit ein Wert zugewiesen wird. Damit ist die Angabe eines Wertes für diesen Parameter nicht zwingend erforderlich. Hierbei ist zu beachten, dass wenn eien Methode sowohl feste als auch optionale Parameter besitzt, dass erst die festen, dann die optionalen angegeben werden müssen. Um zu überprüfen ob einem optionalen Parameter ein Wert übergeben wurde reicht es damit aus zu überprüfen, ob der Wert des Parameters vom Standartwert abweicht.
+			
+			Methodenaufruf mittels benannter Argumente
+			
+				Es ist weiterhin möglich feste Werte an einen Parameter weiter zu geben. Hierzu wird beim Methodenaufruf der Parameterbezeichner dann einem Doppelpunkt und dann dem Wert der Übergeben werden soll angegeben. Es können sowohl benannte als auch unbenannte Parameter an eine Methode übergeben werden hierbei ist jedoch zu beachten, dass erst die unbenannten und dann die benannten Parameter angegeben werden.
+				
+		3.5.9 Die Trennung von Daten und Code
+		
+			Objekte bestehen allgemein aus Eigenschaften (Daten) und Methoden (Code). Hierbei ist zu beachten, dass ein Objekt als Instanz einer Klasse immer einen Festen Speicherblock im Speicher reserviert der die Größe aller Eigenschaften umfasst. Dieser ist für jedes Objekt desselben Typs gleich groß. Methoden hingegen werden nur einmal im Speicher festgelegt und können von dort aus abgerufen werden. Bei diesem Prinzip spricht man von der Trennung von Daten und Code.
+			
+		3.5.10 Namenskonflikte mit this lösen
+		
+			Da lokale Variablen nur innerhalb eines Methodenblocks gültig sind dürfen die Bezeichner durchaus gleich sein wie die eines Feldes. Dies kann natürlich dazu führen, dass bei einer Wertzuweisung dieses Bezeichners das Problem auftritt, dass evtl. der falsche Bezeichner den Wert erhält. Wird innerhalb einer Methode dem gleichnamigen bezeichner ein Wert zugewiesen, so wird die lokale Variable diesen Wert erhalten, die diese stärker bindet als das Feld gleichen namens. Möchte man jedoch auf das Feld zugreifen so muss dem Bezeichner das Schlüsselwort this vorangestellt werden.
+			
+		3.6 Konstruktoren
+		
+			Konstruktoren sind spezielle Methoden einer Klasse die aufgerufen werden, sobald ein Objekt daraus instanziiert wird. Dieses wird zum Beispiel genutzt um einem Objekt sofort Werte zu übergeben die für den weiteren Verlauf nötig sind, eine Datenbankverbinduntg aufzubauen oder eine Datei zu öffnen. Sie dienen also zum kontrollierten Initialisieren eines Objekts. 
+		
+			
+		
+			
+			
+		
+			
 			
 			
 			
