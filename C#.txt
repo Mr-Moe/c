@@ -1016,7 +1016,50 @@
 			
 		3.6 Konstruktoren
 		
-			Konstruktoren sind spezielle Methoden einer Klasse die aufgerufen werden, sobald ein Objekt daraus instanziiert wird. Dieses wird zum Beispiel genutzt um einem Objekt sofort Werte zu übergeben die für den weiteren Verlauf nötig sind, eine Datenbankverbinduntg aufzubauen oder eine Datei zu öffnen. Sie dienen also zum kontrollierten Initialisieren eines Objekts. 
+				Konstruktoren sind spezielle Methoden einer Klasse die aufgerufen werden, sobald ein Objekt daraus instanziiert wird. Dieses wird zum Beispiel genutzt um einem Objekten sofort Werte zu übergeben die für den weiteren Verlauf nötig sind, eine Datenbankverbinduntg aufzubauen oder eine Datei zu öffnen. Sie dienen also zum kontrollierten Initialisieren eines Objekts. Konstruktoren werden aufgerufen sobald ein Objekt mit dem new Operator instanziiert wird.
+				
+				Genau wie Methoden, lassen sich auch Konstruktoren überladen. Allerding haben Konstruktoren niemals einen Rückgabewert nichtmal void. 
+				
+				Die allgemeine Syntax einer Konstruktors sieht wie folgt aus:
+				
+					[Zugriffsmodifizierer] [Klassenbezeichner]() {
+						[...]
+					}
+					
+				Wird ein Objekt erstellt wird im ersten Schritt der benötigte Speicherplatz allokiert und im zweiten Schritt der Konstruktor aufgerufen, der das Objekt initialisiert.
+			
+			3.6.1 Konstruktoren bereitstellen
+			
+				Mit parametrisierten Konstruktoren ist es möglich Werte schon während der Erstellung eines Objekts zuzuweisen. Hierzu folgende 3 Besipiele die zeigen, wie man Überladung von Konstruktoren nutzen kann um einem Objekt zum Zeitpunkt der Erstellung Werte zu übergeben.
+				
+					public Circle() {}
+					
+					public Circle(int radius) {
+						Radius = radius;
+					}
+					
+					public Circle(int Radius, double x, double y) {
+						XCoordinate = x;
+						YCoordinate = y;
+						Radius = radius;
+					}
+					
+			3.6.2 Die Konstruktoraufrufe
+			
+				Im oben angegebenen Fall ist zu sehen, dass es nun möglich ist ein Objekt aus der Klasse Circle auf 3 verschiedene Arten zu initialisieren. Hierbei wird der Compiler den richtigen Konstruktor automatisch aussuchen. Sollte es hierbei zu Doppeldeutigkeiten kommen wird der Compiler einen Fehler ausgeben.
+				
+			3.6.3 Definition von Konstruktoren
+			
+				Es ist zu beachten, dass neben den bereits erwähnten Regeln noch dazu kommt, dass ein konstruktor nur beim Erzeugen eines Objekts aufgerufen wird, nicht aber auf ein bestehendes Objekt angewandt werden kann um zum Beispiel Werte zu ändern, die man während der Initialisierung hätte setzen können bzw. gesetzt hat.
+				Außerdem ist zu beachten, dass es einen impliziten Standartkonstruktor gibt, der parameterlos ist. Bestimmt man jedoch explizit einen Konstruktor kann dieser "unsichtbare" Standartkonstruktor nicht mehr aufgerufen werden. Möchte man jedoch immernoch ein Objekt initialisieren können ohne einen Parameter zu übergeben ist es notwendig einen parameterlosen Konstruktor explizit zu erstellen.
+				
+			3.6.4 public und internal Konstruktoren
+			
+				Während der implizierte Standartkonstruktor immer public ist, kann man durchaus auch einen internal Konstruktor erstellen der nur innerhalb der Anwendung genutzt werden kann in der die Klasse erstellt wurde.
+				
+			3.6.6 Konstruktoraufrufe umleiten
+			
+				
 		
 			
 		
