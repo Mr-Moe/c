@@ -1059,22 +1059,88 @@
 				
 			3.6.6 Konstruktoraufrufe umleiten
 			
+				Es ist möglich einen Konstruktor implizit durch einen anderen aufzurufen. Hierzu wird ebenfalls das Schlüsselwort this verwendet. Der this Operator wird, getrennt von einem Doppelpunkt nach der Prameterliste geschrieben. Hiermit wird sichergestellt das der angegebene Parameter weiteren Konstruktoren zur Verfügung gestellt wird. Die folgende Syntax beschreibt diese Vorgehensweise beispielhaft:
 				
+					public Circle (int radius) {
+						Radius = radius;
+					}
+					
+					public Circle (int radius, double x, double y) : this(radius) {
+						XCoordinate = x;
+						YCoordinate = y;
+					}
+					
+				Wird ein Parameter an einen anderen Konstruktor weitergeleitet wird dieser komplett ausgeführt und gibt die Kontrolle dann an den aufrufenden Konstruktor zurück.
+				
+				Konstruktorverkettung - die bessere Lösung
+				
+					Gehen wir einmal davon aus, dass wir eine komplexe Struktur von Konstruktoren haben, die jeweils andere aufrufen um Parameter weiterzuleiten. In diesem Fall haben wir neben einem Leistungsabfall des Programms (da jeder einzelne Konstruktor ausggeführt wird) auch das Problem, dass die Programmlogik unübersichtlich wird, da wir diese an viele verschiedene Stellen des Codes verteilen. Aus diesem Grund sollte man bei Verkettungen von Konstruktoren darauf achten die gesamnte initialisierungslogik in den Konstruktor zu coden, der die meisten Parameter erwartet. Wird ein anderer Konstruktor aufgerufen der über weniger Parameter verfügt sollte man die angegebenen weiterleiten und für die nicht vorhandenen einen Standartwert weiterleiten. Auf diese Weise bleibt der Code übersichtlich und efizient.
+					
+			3.6.7 Verweinfachte Objektinitialisierung
+			
+				Es ist möglich ein Objekt zu initialisieren und dabei neben der Standartschreibweise
+				
+					Circle kreis = new Circle (12, -100, 250)
+					
+				auch die Schreibweise innerhalb der geschweiften Klammern zu nutzen:
+				
+					Circle kreis = new Circle() { XCoordinate = -100, Radius = 12, YCoordinate = 250 }
+					
+				Wie zu sehen ist spielt es in dieser Schreibweise keine Rolle in welcher Reihenfolge die Werte angegeben werden. Zu beachten ist hier, dass ein Wert der auf diese weise angegeben wird die Zuweisung eines evtl. vorhandenen Konstruktors der der gleichen Variable einen Wert zuweist überschreibt bzw. wird die Zuweisung des Konstruktor ignoriert. Dass bedeutetet, dass
+				
+					Circle kreis = new Circle(30) {Radius = 550}
+					
+				Dem Objekt kreis einen Radius von 550 zuweist und NICHT von 30.
+			
+		3.7 Der Destruktor
+		
+			Das Gegenstück zum Konstruktor ist der Destruktor. Wenn entweder die Objektvariable Ihren Gültigkeitsbereich verlässt oder der Referenz auf ein Objekt der Wert null zugewiesen wird, steht es, wie bereits erwähnt nicht mehr zu Verfügung. Dies bedeutet im allgemeinen jedoch nicht, dass der Destruktor aufgerufen wird. Dies geschiet durch den Garbage Collector, der normalerweise durch die Laufzeitumgebung selbst angestoßen wird. Die Syntax des Destruktors sieht wie folgt aus:
+			
+				~Circle()
+				{
+					[...]
+				}
+				
+			Es ist zu beachten, dass ein Destruktor weder einen Zugriffsmodifizierer noch die angabe eines Rückgabewertes besitzt.
+			
+		3.8 Konstanten in einer Klasse
+			3.8.1 Konstanten mit dem Schlüsselwort const
+			
+				Will man einen Wert angeben der innerhalb des Programms nicht geändert werden darf so nutzt man das Schlüsselwort const zwischen Zugriffsmodifizierer und Datentyp:
+				
+					public class Mathematics {
+						public const double PI = 3.14;
+						[...]
+					}
+					
+				Einer Konstante kann nur ein Wertetyp zugewiesen werden, also int, long, double etc. . Referenztypen sidn nciht zugelassen. Die einzige Ausnahme bildet hier string.
+				
+			3.8.2 Schreibgeschützte Felder mit readonly
+			
+				Neben dem definieren von Konstanten mit const ghibt es außerdem die Möglichkeit Konstanten mit readonly zu definieren. Dies geschieht Syntaktisch genau wie das Defninieren mit const. Der Unterschied ist, dass die Festlegung eines Wertes für readonly Felder sowohl in der Deklaration als auch innerhalb eines Konstruktors erfolgen kann (die Zuweisung innerhalb einer Methode ist jedoch nicht möglich). Es ist bei readonly außerdem möglich Referenztypen zu nutzen. Folgender Code zeigt hierzu ein Beispiel:
+				
+					class Coordinate{
+						public readonly int XCoordinate;
+						public readonly int YCoordinate;
+						
+						public Coordinate(int x, int y) {
+							XCoordinate = x;
+							YCoordinate = y;
+						}
+					}
+					
+		3.9 Statische Klassenkomponenten
+			3.9.1 Statische Eigenschaften
+		
+				
+			
+		
 		
 			
 		
 			
 			
 		
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 			
