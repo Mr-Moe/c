@@ -624,10 +624,10 @@
 			//Definition der Klasse
 			class Person{
 			
-			public string Name;
-			public int Alter;
-			
-			public void Laufen();
+				public string Name;
+				public int Alter;
+				
+				public void Laufen();
 			
 			}
 			
@@ -640,11 +640,11 @@
 		
 		
 			static void Main(string[] args) {
-			Person peter = new Person();
-			Person britta = new Person();
-			
-			peter.Alter = 32
-			britta.Alter = 21
+				Person peter = new Person();
+				Person britta = new Person();
+				
+				peter.Alter = 32
+				britta.Alter = 21
 			
 			}
 			
@@ -1132,6 +1132,128 @@
 		3.9 Statische Klassenkomponenten
 			3.9.1 Statische Eigenschaften
 		
+				Als statische Eigenschaften (auch Klassenvariablen) werden Eigenschaften bezeichnet, die nicht spezifisch für ein spezielles Objekt, sondern für die gesamte Klasse bzw die Klasse selbst notwendig/gültig sind. Dies macht zum Beispiel dann sinn, wenn wir wissen wollen wieviele Objekte aus einer Klasse instanziiert wurden. Diese Information ist für das Objekt welches initialisiert wird nicht direkt von belang, für die Klasse jedoch schon. Aus diesem Grund wird eine statische Eigenschaft genutzt, die zu keinem Konkreten Objekt eine beziehung hat aber für alle Objekte der Klasse in der diese Eigenschaft definiert wurde gültig ist.
+				
+				Um eine statische Eigenschaft zu nutzen schreiben wir das Schlüsselwort static zwischen Modifizierer und Datentyp. Die allgemeine Syntax lautet demnach:
+				
+					[Modifizierer] static [Datentyp] [Bezeichner];
+				
+				Da Klassenvariablen unabhänig von jedem konkreten Objekt sind ist es unzulässig sie auf einer Objektreferenz aufzurufen. Stattdessen werden sie aus der Klasse direkt aufgerufen. Will man also die Anzahl der bereits gezählten instanziierten Objekte zählen (natürlich nachdem man eine Methode geschrieben hat die dieses tut) so kann man dies mit
+				
+					int x = Circle.CountCircles;
+					
+				tun.
+				
+				Für statische Felder gelten die gleichen Regeln der Datenkapselung wie für nicht statische Felder (Instanzvariablen). Dies bedeutet, dass wir eine Klassenvariable private deklarieren und mithilfe einer statischen Eigenschaftsmethode den Zugriff darauf regeln müssen. Um zu verhindern, dass die Klassenvariable von außerhalb manipuliert werden kann lassen wir den set Operator innerhalb der statischen Eigenschaftsmethode weg. Um dem Klassenvariablen trotzdem einen Wert zuweisen zu können müssen wir diese mit dem this Schlüsselwort direkt ansprechen.
+				
+				Wie bereits erwähnt brauchen wir eine Methode die den Counter erhöht sobald ein Objekt initialisiert wird. Dazu macht es sinn den Konstruktor zu nutzen. Hierzu folgendes Beispiel:
+				
+					// Konstruktoren
+					
+					public Circle () : this(0, 0, 0) {}
+					
+					public Circle(int radius) :this(radius, 0, 0) {}
+					
+					public Circle(int radius, double x, double y) {
+						XCoordinate = x;
+						YCoordinate = y;
+						Radius = radius;
+						Circle._CountCircle++;
+					}
+					
+				Hierbei ist zu beachten, dass man einen solchen Counter am Ende der Methode schreiben sollte. Kommt es zum Beispiel zu einem Fehler in den Zeilen davor, was dazu führen kann, dass kein Objekt erstellt wird, so würde der Counter, wenn er an erster Stelle implementiert wäre, einen falschen Wert annehmen.
+				
+			3.9.2 Statische Methoden
+			
+				Neben static deklarierten Feldern gibt es auch static deklarierte Methoden. Das Schlüsselwort static wird dabei an der gleichen Stelle geschrieben wie bei Klassenvariablen. Ansonsten bleibt die Syntax der static Methode (Klassenmethode) gleich der einer Methode innerhalb eines Objektes (Instanzmethode). Klassenmethoden sind uns schon häufig während der Programmierung begegnet. Zum Beispiel sind die Methoden WriteLine bzw. ReadLine Statische Methoden der Klasse Console. Eine Weitere Klasse die nicht nur static Methoden nutzt, sondern ausschließlich aus diesen besteht ist die Klasse Math, weshalb wir diese hier nutzen um Beispiele anzubringen.
+				
+				Sind innerhalb einer Klasse sowohl Klassenmethoden/Klassenvariablen als auch Instanzmethoden/Instanzvariablen vorhanden gelten folgende Zugriffsregeln von einem zum anderen:
+				
+					-Aus einer Instanzmethode heraus lassen sich Klassenvariablen manipulieren udn Klassenmethoden aufrufen
+					-Der umgekehrte Weg, nämlich aus einer statischen Methode heraus auf Instanzeigenschaften und Instanzmethoden zuzugreifen, ist nicht möglich. Dies ist logischerweise dem Fakt geschuldet, dass der Zugriff nicht eindeutig ist, da es immer mehrere Objekte des entprechenden Typs geben kann.
+					
+				Wollen wir zum Beispiel Methoden bereitstellen mit denen wir die Grundfläche bzw. den Umfang eines beliebigen Kreises berechnen wollen ohne dafür ein Objekt erzeugen zu müssen könnten wir folgende beiden static deklarierten Methoden definieren:
+				
+					public static double GetArea (int radius) {
+						return Meth.PI * Math.Pow(radius, 2);
+					}
+					
+					public static double GetCircumference(int radius) {
+						return 2 * Math.Pi * radius;
+					}
+					
+					Es ist zu beachten, dass eine gültige Überladung stattfinden muss, sofern es Instanzmethoden gibt die ebenfalls den Umfang bzw die Grundfläche berechnen. der modifizierer static reicht nciht aus um eine gültige Überladung zu erzeugen.
+					
+				3.9.3 Statische Klasseninitialisierer
+				
+					Es ist möglich eine static deklarierten Konstruktor zu erzeugen. Dieser Konstruktor (auch statischer Konstruktor oder statischer Initialisierer) hat nur auf die als static deklarierten Felder und Methoden Zugriff. Weiterhin wird dieser nur ein einziges mal aufgerufen und zwar direkt bevor ein static Member aufgerufen oder manipuliert wird bzw. wenn eine Instanz der Klasse erzeugt wird.
+					
+					Die Syntax eines als static deklarierten Konstruktor ist dem eines normalen sehr ähnlich. Ihm wird das Schlüsselwort static vorrangestellt und er besitzt nie einen Zugriffsmodifizierer. Da ein statischer Konstruktor immer automatisch aufgerufen wird und niemals direkt, macht auch eine Parameterliste keinen Sinn, die runden Klammern sind deshalb grundsätzlich leer.
+					
+					Aufrufreihenfolge der Konstruktoren
+					
+						Der statische Konstruktor wird prinzipiell als erstes aufgerufen, wass es ermöglicht dem nicht statischen Konstruktor Werte zu übergeben die erst durch den statischen Konstruktor erzeugt werden.
+						
+				3.9.4 Statische Klassen
+					
+					Es ist möglich eine ganze Klasse als static zu deklarieren. Ein Beispiel für diese Klassen ist die bereits angesprochene Klasse Math. Bei der Erstellung statischer Klassen sind folgende Fakten zu beachten:
+					
+						-Statische Klassen dürfen nur statische Klassenmidglieder haben. Der Modifizierer static ist auch bei den Membern anzugeben.
+						-Statische Klassen enthalten keinen Konstruktor und können deshalb auch nicht instanzziert werden. Der parameterlose Konstruktor ist implizit private.
+						
+				3.9.5 Statische Klasse oder Singleton-Pattern?
+			
+					Eine statische Klasse macht genau dann sinn, wenn wir verhindern wollen, dass ein Objekt aus dieser Klasse erzeugt werden kann. Dasselbe Ziel mit einem etwas anderen Ansatz wird durch ein Design Patter, ein sogenanntes Singleton-Pattern, verfolgt.
+					
+					Als Design Pattern bezeichnet man allgemeine verwendbare Lösungsansätze für immer wiederkehrende Probleme im Umfeld eines Softwareentwurfs. Design Pattern beschreiben also im weitestgehenden Sinn Schablonen, die in einem bestimmten Kontext einer Software immer wieder verwendet werden können.
+					
+					Betrachten wir dazu das folgende Singleton-Pattern am konkreten Beispiel der Klasse Demo:
+					
+						public class Demo {
+							private static Demo	_Instance = null;
+							public int Value {get; set;}
+							
+							private Demo() {}
+							
+							public static Demo Instance {
+								get {
+									if(_Instance == null) {
+										_Instance = new Demo();
+									}
+									return _Instance
+								}
+							}
+						}
+						
+					Wie zu sehen ist gibt es ein statisches Feld _Instance und einen Kontruktor, der als private deklariert ist. Damit kann man aus diesem Pattern nur innerhalb desselben ein Objekt erzeugen. Des Weiteren besitzt die Klasse eine statische Methode die als erstes prüft, ob bereits ein Objekt erzeugt wurde um danach _Instance zurückgiebt. Stellen wir uns nun vor wir erstellen ein Objekt aus dieser Klasse mit
+					
+						Demo demo = Demo.Instance;
+						demo.Value = 128;
+						Demo demo1 = Demo.Instance;
+						Console.WriteLine(demo1.Value);
+						
+					Wir haben and ieser Stelle versucht zwei Objekte aus der Klasse zu erzeugen, was aber nicht funktioniert, da beim erzeugen eines neuen Objekts der if Zweig umgangen wird, kein neues Objekt entsteht und nur die referenz auf das erste Objekt weitergegeben wird. Obwohl wir demo1 nie einen Wert zugewiesen haben wird der return Teil der Methode 128 enthalten und diesen wert auch in der Konsole ausgeben. Dies ist der Beweis dafür, dass es mit diesem Pattern nicht möglich ist mehr als ein Objekt zu erzeugen.
+					
+					Das gleiche Ergebnis könnenw ir auch erziehlen, wenn wir eine statische Klasse definieren. Hierbei ist es sogar möglich auf die beispielhafte Methode Instance zu verzichten. Zum vergleich von Singleton-Pattern und statischer Methode folgende Vor- und Nachteile:
+					
+						-Bei Verwendung des Singleton-Pattern wird tatsächlich ein Objekt erzeugt, das zu einem späteren Zeitpunkt vom Garbage Collector zerstört werden muss. Eine statische Klasse beschreibt hingegen kein Objekt und fällt damit auch nicht in den Aufgabenbereich des Garbage Collectors. Ein Pluspunkt der statischen Klasse.
+						
+						-Statische Klassen können nicht abgeleitet werden. Auch wenn und die damit im Zusammenhang stehende Vererbung thematisch erst im nächsten Kapitel beschäftigen wird, sei dieser Punkt, der generell als Nachteil bewertet werden muss, an dieser Stelle erwähnt.
+						
+			3.10 Namensräume (Namespaces)
+				3.10.2 Die using-Direktive
+				
+					Wenn wir die bereits häufig genutzte Methode WriteLine() der Klasse Console nutzen möchten müssten wir eigentlich auch den Namespace mit angeben in dem sich die Klasse befindet, dieses wäre in unserem Fall System. Um eine einfache Konsolenausgabe zu erzeugen müssten wir also
+					
+						System.Console.WriteLine("Hallo Welt!");
+						
+					angeben. Diese Angabe wird als vollqualifizierter Name bezeichnet. Da Namespaces auch geschachtelt werden können, kann diese schreibweise zu unübersichtlichem Code führen. An dieser Stelle hilft uns using-Direktive. Unter Angabe von using und dann dem Namespace bzw. dem Namespace und den darunterliegenden Namespaces wird dem aktuellen Quellcode zu jeder Zeit jede enthaltene Klasse innerhalb dieser Namespaces zur Verfügung gestellt. Damit ist es möglich die Namespacebezeichner vom Code auszuschließen um den Code teilweise drastisch zu verkürzen.
+					
+					Es ist zu beachten, dass die Einbindung eines Namespaces durch die using-Direktive außerhalb der Klassendefinition steht.
+					
+				3.10.4 Vermeiden von Mehrdeutigkeiten
+				
+					
 				
 			
 		
