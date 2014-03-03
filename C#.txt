@@ -1253,8 +1253,69 @@
 					
 				3.10.4 Vermeiden von Mehrdeutigkeiten
 				
+					Namespaces sind bekanntermaßen für die Sortierung von Klassen zuständig die ähnliche Funktionalitäten aufweisen. Weiterhin ist es durch Namespaces möglich Typen zu erstellen, die den gleichen Bezeichner besitzen. Hierbei kann es jedoch zu dem Problem kommen, dass mit dem Einbinden zweier Namespaces die Klassen mit dem gleichen Bezeichner besitzen dem Kompiler nicht bewusst ist, welche er nutzen soll. In diesem Fall funktioniert auch die using Direktive nicht. Um diesen Umstand zu vermeiden müssen wir die zu nutzende Klasse näher spezifizieren. Gehen wir davon aus, dass wir die Namespaces MyApplication und YourApplication haben die beide die Klasse Person definieren und weiterhin auch beide mit der using Direktive eingebunden werden. Hierzufolgendes Beispiel:
 					
+						using MyApplication;
+						using YourApplication
+						
+						MyApplication.Person person = new MyApplication.Person();
+						
+					Wie zu sehen ist wird der zu nutzende Namespace mit angegeben um dem Problem aus dem Weg zu gehen.
+					
+					Weiterhin ist es möglich einen Alias zu nutzen. 
+					
+						using FirstPerson = MyApplication.Person;
+						using SecondPerson = YourApplication.Person;
+						
+					Mit einem Alias ist es somit auch möglich Klassen umzubenennen:
+					
+						using Ausgabe = System.Console;
+						
+						Ausgabe.WriteLine("Hello world");
+						
+					
+4 Vererbung, Polymorphie und Interfaces
+	4.1 Die Vererbung
+		4.1.1 Basisklassen und abgeleitete Klassen
+		
+			Nehmen wir die Beispielklasse Circle und gehen wir davon aus, dass diese als abgeschlossen gilt. Es soll also innerhalb dieser Klasse keinerlei neue Funktionalität eingebaut werden. Denno wollen wir zum Beispiel eine neue Methode schreiben, die in der Lage ist den angegebenen Kreis grafisch dazustellen. Hierzu erstellen wir eine neue Klasse namens GraphicCircle. Wir nutzen hier das Prinzip der Vererbung. Eine Klasse die ihre Funktionen an eine andere vererbt wird als Basisklasse bezeichnet. Eine Klasse die Funktionen von einer Basisklasse erbt wird als Subklasse oder abgeleitete Klasse bezeichnet. Eine abgeleitete Klasse muss nicht zwangsweise eine solche bleiben. Es kann durchaus geschehen, dass eine abgeleitete Klasse zu einer Basisklasse wird, sobald eine weitere Klasse aus dieser abgeleitet wird. Im Begriff der objektorientierten Programmierung gibt es die Einfach- und die Mehrfachvererbung. Eine einfache Vererbung findet statt, sobald eine Subklasse aus genau einer Basisklasse abgeleitet wird. Bei einer Mehrfachvererbung ist dies nicht der Fall. Um Problemen entgegenzuwirken wird in C# auf die Mehrfachvererbuntg verzichtet. Dies kommt einem Verzicht auf bestimmte Funktionalitäten gleich, der jedoch durch das Prinzip der Interfaces nahezu gleichwertig ausgeglichen wird. Weitere Informationen zum Thema Interfaces werden im weiteren Verlauf dieses Kapitels beschrieben. Als Anmerkung ist zu beachten, dass es innerhalb der .NET Umgebung nur eine wirkliche Basisklasse gibt: Object. Alle anderen .NET Klassen werden aus dieser abgeleitet oder aus einer anderen, die wiederum von Object erbt. Daraus ergibt sich eine Baumartige Struktur.
+			
+		4.1.2 Die Ableitung einer Klasse
+		
+			Um eine Klasse aus einer anderen abzuleiten nutzen wir den : Operator. Hierbei ist zu beachten, dass zuerst die abgeleitete Klasse angegeben wird und darauffolgend (getrennt durch den : Operator die Basisklasse) Um bei unserem Beispiel zu bleiben müssen wir also folgende Syntax erhalten:
+			
+				public class GraficCircle : Circle {
+					public void Draw() {
+						Console.WriteLine("Der Kreis wird gezeichnet.");
+					}
+				}
 				
+			Wie zu sehen ist erweitern wir die Klasse GraficCircle um die Methode Draw. Diese zeichnet natürlich noch keinen Kreis sondern gibt der einfachheit halber nur einen Text in der Konsole aus.
+			
+			Das Prinzip der Vererbung lässt sich sehr schnell udn einfach an einem Beispiel erhalten. Wenn wir nun innerhalb der Klasse GraficCircle ein Objekt erstellen und nach Aufruf desselben den Punktoperator nutzen, so wird uns ein Dropdownmenü nicht nur die Methode Draw innerhalb dieser Klasse angezeigt, sondern auch alle als public deklarierten Methoden und Eigenschaften der Klasse Circle. Dies lässt uns darauf schließen, dass eine Objekt des Typs GraficCirlce automatisch auch ein Objekt des Typs Circle ist da es dessen gesamte (als publich deklarierten) Funktionalitäten erbt.
+			
+		4.1.3 Klassen, die nicht abgeleitet werden können
+		
+			Klassen die als sealed definiert sind
+			
+				In einigen fällen macht es sinn einer Klasse die Fähigkeit zu nehmen als Basisklasse zu fungieren, da es entweder keinen Sinn macht dieses zu tun oder strikt unterbunden werden soll, da zum Beispiel die errechneten Werte als Endergebnisse gelten sollen.
+				
+				Um sicherzustellen, dass eine Klasse nicht weiter vererbt werden kann wird die Klassendefinition um den Modifizierer sealed ergänzt:
+				
+					public sealed class GraficCirlce {
+						[...]
+					}
+					
+			Statische Klassen und Vererbung
+			
+				Neben sealed Klassen können auch aus statischen Klassen keine anderen abgeleitet werden. Des Weiteren kann eine statische Klasse keine andere Basisklasse besitzen als die Klasse Object.
+				
+		4.1.4 Konstruktoren in abgeleiteten Klassen
+		
+			
+			
+			
+			
 			
 		
 		
@@ -1273,8 +1334,8 @@
 			
 			
 			
-			
-			
+	
+	
 			
 			
 			
