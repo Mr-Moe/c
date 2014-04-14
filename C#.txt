@@ -1132,7 +1132,7 @@
 		3.9 Statische Klassenkomponenten
 			3.9.1 Statische Eigenschaften
 		
-				Als statische Eigenschaften (auch Klassenvariablen) werden Eigenschaften bezeichnet, die nicht spezifisch für ein spezielles Objekt, sondern für die gesamte Klasse bzw die Klasse selbst notwendig/gültig sind. Dies macht zum Beispiel dann sinn, wenn wir wissen wollen wieviele Objekte aus einer Klasse instanziiert wurden. Diese Information ist für das Objekt welches initialisiert wird nicht direkt von belang, für die Klasse jedoch schon. Aus diesem Grund wird eine statische Eigenschaft genutzt, die zu keinem Konkreten Objekt eine beziehung hat aber für alle Objekte der Klasse in der diese Eigenschaft definiert wurde gültig ist.
+				Als statische Eigenschaften (auch Klassenvariablen) werden Eigenschaften bezeichnet, die nicht spezifisch für ein spezielles Objekt, sondern für die gesamte Klasse bzw die Klasse selbst notwendig/gültig sind. Dies macht zum Beispiel dann Sinn, wenn wir wissen wollen wieviele Objekte aus einer Klasse instanziiert wurden. Diese Information ist für das Objekt welches initialisiert wird nicht direkt von Belang, für die Klasse jedoch schon. Aus diesem Grund wird eine statische Eigenschaft genutzt, die zu keinem Konkreten Objekt eine beziehung hat aber für alle Objekte der Klasse in der diese Eigenschaft definiert wurde gültig ist.
 				
 				Um eine statische Eigenschaft zu nutzen schreiben wir das Schlüsselwort static zwischen Modifizierer und Datentyp. Die allgemeine Syntax lautet demnach:
 				
@@ -1169,13 +1169,13 @@
 				
 				Sind innerhalb einer Klasse sowohl Klassenmethoden/Klassenvariablen als auch Instanzmethoden/Instanzvariablen vorhanden gelten folgende Zugriffsregeln von einem zum anderen:
 				
-					-Aus einer Instanzmethode heraus lassen sich Klassenvariablen manipulieren udn Klassenmethoden aufrufen
+					-Aus einer Instanzmethode heraus lassen sich Klassenvariablen manipulieren und Klassenmethoden aufrufen
 					-Der umgekehrte Weg, nämlich aus einer statischen Methode heraus auf Instanzeigenschaften und Instanzmethoden zuzugreifen, ist nicht möglich. Dies ist logischerweise dem Fakt geschuldet, dass der Zugriff nicht eindeutig ist, da es immer mehrere Objekte des entprechenden Typs geben kann.
 					
 				Wollen wir zum Beispiel Methoden bereitstellen mit denen wir die Grundfläche bzw. den Umfang eines beliebigen Kreises berechnen wollen ohne dafür ein Objekt erzeugen zu müssen könnten wir folgende beiden static deklarierten Methoden definieren:
 				
 					public static double GetArea (int radius) {
-						return Meth.PI * Math.Pow(radius, 2);
+						return Math.PI * Math.Pow(radius, 2);
 					}
 					
 					public static double GetCircumference(int radius) {
@@ -1192,7 +1192,7 @@
 					
 					Aufrufreihenfolge der Konstruktoren
 					
-						Der statische Konstruktor wird prinzipiell als erstes aufgerufen, wass es ermöglicht dem nicht statischen Konstruktor Werte zu übergeben die erst durch den statischen Konstruktor erzeugt werden.
+						Der statische Konstruktor wird prinzipiell als erstes aufgerufen, was es ermöglicht dem nicht statischen Konstruktor Werte zu übergeben die erst durch den statischen Konstruktor erzeugt werden.
 						
 				3.9.4 Statische Klassen
 					
@@ -1203,7 +1203,7 @@
 						
 				3.9.5 Statische Klasse oder Singleton-Pattern?
 			
-					Eine statische Klasse macht genau dann sinn, wenn wir verhindern wollen, dass ein Objekt aus dieser Klasse erzeugt werden kann. Dasselbe Ziel mit einem etwas anderen Ansatz wird durch ein Design Patter, ein sogenanntes Singleton-Pattern, verfolgt.
+					Eine statische Klasse macht genau dann Sinn, wenn wir verhindern wollen, dass ein Objekt aus dieser Klasse erzeugt werden kann. Dasselbe Ziel mit einem etwas anderen Ansatz wird durch ein Design Patter, ein sogenanntes Singleton-Pattern, verfolgt.
 					
 					Als Design Pattern bezeichnet man allgemeine verwendbare Lösungsansätze für immer wiederkehrende Probleme im Umfeld eines Softwareentwurfs. Design Pattern beschreiben also im weitestgehenden Sinn Schablonen, die in einem bestimmten Kontext einer Software immer wieder verwendet werden können.
 					
@@ -1312,8 +1312,38 @@
 				
 		4.1.4 Konstruktoren in abgeleiteten Klassen
 		
+			Beim Erzeugen eines Objekts einer abgeleiteten Klasse gelten die gleichen Regeln wie bei dem einer Basisklasse:
+			
+				Es wird generell ein Konstruktor aufgerufen.
+				Der Subklassenkonstruktor darf überladen werden.
+				
+			Da Konstruktoren nicht von der Basisklasse in die abgeleitete Klasse vererbt werden ist es notwendig alle benötigten Konstruktoren zu erstellen. Wollen wir Werte nutzen die in der Basisklasse vorhanden sind aber als private Member deklariert sind bekommen wir ein Problem. Auch wenn ein Objekt aus der abgeleiteten Klasse gleichzeitig auch ein Objekt der Basisklasse ist, kann man von dieser aus trozzdem nicht auf private Member zugreifen.
+			
+		4.1.5 Der Zugriffsmodifizierer preotected
+		
+			Als protected definierte Member verhalten sich ähnlich wie private deklarierte. Man kann zwar von außerhalb nicht darauf zugreifen, jedoch wird sichergestellt, dass aus abgeleiteten Klassen direkt darauf zugegriffen werden kann. 
 			
 			
+		4.1.6 Konstruktorverkettung in der Vererbung
+		
+			Wenn wir den bereits erwähnten Counter für die instanziierten Objekte implementiert haben und nun, darauf rücksicht nehmend, dass ein Objekt der Subklasse auch immer ein Objekt der Basisklasse ist, diesen um 1 erhöhen, sobald ein Objekt aus der Subklasse instanziiert wird kommen wir zum Ergebnis 2, wenn wir nur ein Objekt Instanziieren. Dies ist dem Fakt geschuldet, dass beim instanziieren eines Objekts aus der Subklasse (und dem damit verbundenen Ausführen des Konstruktors der Subklasse) auch immer die Konstruktoren der Basisklasse aufgerufen werden. Dies führt dazu, dass wir den Counter zweimal erhöhen und damit jedesmal ein Falsches Ergebnis erhalten werden, sobald wir ein Objekt aus der Subklasse erzeugen. Dies wird als Kontruktorverkettung bezeichnet. Zu beachten ist hierbei, dass standartmäßig immer der Parameterlose Konstruktor aufgerufen wird. Hieraus ergibt sich ein großes Problem für Klassen mit selbst implementierten Konstruktoren. Wie wir wissen besteht immer der impliziete Parameterlose Konstruktor. Dies ist jedoch nur solange der Fall bis wir einen eigenen Konstruktor erstellen. Da durch die Konstruktorverkettung jedoch immer der parameterlose Konstuktor aufgerufen wird (welcher im Fall selbstimplementierter Parameterbehafteter Konstruktoren überschrieben wird) kommt es in diesem Fall zu einem Kompilierfehler, wenn wir nicht explizit einen Parameterlosen Konstruktor implementieren.
+			
+			
+			Die Konstruktorverkettung mit base steuern
+			
+				Wie bereits erwähnt liegt der Fehler hier daran, dass wir den Counter zweimal aufrufen. Einmal in den Konstruktoren der Basisklasse und einmal in den Konstruktoren der Subklasse. Um dieses Problem zu beheben macht es Sinn beim erzeugen eines Objekts aus der Subklasse die Konstruktoren der Basisklasse aufzurufen, da diese die gleiche Funktionalität aufweisen wie die der abgeleiteten Klasse. Dies ist mit dem Schlüsselwort base möglich. Dieses kann wie das Schlüsselwort this in Kontruktoren verwendet werden. Um dies zu veranschaulichen gehen wir zu dem bereits bekannten Bespiel der Circle bzw. GraficCircle Klasse:
+				
+					public GraficCircle : base(0, 0, 0) { }
+					
+					public GraficCircle (int radius) : base(radius, 0, 0) { }
+					
+					public GraficCircle(int radius, double x, double y) : base(radius, x , y) { }
+					
+				Wie hier zu sehen ist wird mit dem Schlüsselwort der Kontruktor der direkten Basisklasse aufgerufen und diesem die eventuell vorhandenen Parameter übergeben. In diesem Beispiel wird immer der dreifach parametrisierte Parameter aufgerufen. Dies macht in unserem Fall auch Sinn, da wir diesem die eigentliche Funktionalität zugewiesen haben.
+				
+			Der Zugriff auf die Member der Basisklasse mit base
+			
+				
 			
 			
 			
