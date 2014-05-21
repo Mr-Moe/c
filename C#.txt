@@ -1343,10 +1343,79 @@
 				
 			Der Zugriff auf die Member der Basisklasse mit base
 			
+				Das Schlüsselwort base kann auch genutzt werden um auf Member der Basisklasse zuzugreifen, sofern diese nicht privat deklariert sind. Hierbei ist zu beachten, dass auch Methoden einer Basisklasse angesprochen werden können die wiederum zu einer Basisklasse darüber gehören. Hierzu folgendes Beispiel:
 				
+					class BaseClass {
+						public void DoSomething() {
+							Console.WriteLine("Test");
+						}
+					}
+					
+					class SubClass1 : BaseClass {}
+					
+					clas SubClass2 : SubClass1 {
+						public void Basetest() {
+							base.DoSomething();
+						}
+					}
+				
+				Ein doppelter Aufruf von base ist nicht gestattet, so wird
+				
+					base.base.DoSomething();
+					
+				nicht funktionieren. Es ist weiterhin zu beachten, dass statische Methoden nicht mit base aufgerufen werden können.
+				
+		
+	4.2 Das Problem geerbter Methoden
+		
+		Gehen wir einmal davon aus wir haben eine Klasse Luftfahrzeug. Diese beerbt die beiden Klassen Flugzeug und Hubschrauber. Da jedes dieser Luftfahrzeuge sowohl einen Hersteller als auch ein Baujahr hat, werden diese in der Basisklasse definiert. Die Spannweite hingegen wird in der Klasse Flugzeug implementiert, Rotordurchmesser hingegen in der Klasse Hubschrauber.
+		Nun wollen wir die Methode Starten() implementieren und hier treffen wir auf ein Problem. Beide Luftfahrzeuge können zwar starten, sie tun dies aber auf vollkommen unterschiedliche Art und Weise. Nichtdestotrotz wollen wir diese Methode durch die Basisklasse bereitstellen. Hierzu sind uns drei möglichkeiten gegeben:
+		
+			- Wir verdecken die geerbten Methoden der Basisklasse in den abgeleiteten Klassen mit dem moddifizierer new
+			- Wir stellen in der Basisklasse eine abstrakte Methode bereit, die in der jeweiligen Subklasse überschrieben werden muss
+			- Wir stellen in der Basisklasse eine virtuelle Methode bereit
 			
+		4.2.1 Geerbte Methoden mit new verdecken
 			
+			Es ist möglich eine geerbte, bereits implementierte Methode neu zu definieren indem wir den Modifizierer new nutzen. Mit
 			
+				public class Flugzeug : Luftfahrzeug {
+					public new void Starten() {
+						Console.WriteLine("Das Flugzeug startet.");
+					}
+				}
+			
+			Sind wir in der Lage die Methode die eigentlich in der Basisklasse defniert wurde zu überschreiben und unabhänig von dieser die neue nutzen. Man spricht in diesem Fall vom verdecken oder ausblenden der geerbten Methode. Als verdeckt bzw. ausgeblendet gilt eine geerbte Basisklassenmethode nur dann wenn diese
+			
+				- den gleichen Namen wie eine Methode der Basisklasse besitzt,
+				- über die gleiche Parameterliste verfügt
+				
+			und dennoch komplett in der Subklasse implementiert ist.
+				
+				Statische Member überdecken
+					
+					Neben Instanzmethoden können auch Eigenschaftsmethoden und statische Komponente einer Basisklasse verdecken. Die im späteren Verlauf erklärten Modifizierer abstract, virtual und override sind im Zusammenhang mit statischen Membern nicht erlaubt
+					
+		4.2.2 Abstrakte Methoden
+		
+			Das Prolem beim verdecken von Basisklassenmethoden liegt auf der Hand. Wird vergessen eine Basisklassenmethode in einer Subklasse zu verdecken, wird die Subklasse immer die Methode der Basisklasse aufrufen was evtl. zu Fehlern führen kann. 
+			
+			Hier hilft uns das Model der abstrakten Methoden weiter. An und für sich ist es nicht notwendig die Methode Starten() in der Basisklasse zu implementieren. Sie wurde dort nur definiert, damit sie jeder Subklasse zu verfügung steht. Da diese Methode jedoch von jeder Subklasse Typspezifisch neu implementiert werden muss lassen wir den gesamten Anweisungsblock einfach weg und erweitern die Methode um den Modifizierer abstract.
+			
+			Dieser zwingt jede Subklasse die Methode neu zu implementieren sofern die Methode genutzt werden soll. Die Methode Starten() müsste als abstrakte Methode in der Basisklasse also wie folgt aussehen:
+			
+				public abstract void Starten();
+				
+			Es ist zu beachten, das eine Klasse die mindestens eine abstrakte Methode enthält selbst abstrakt ist und als solche angegeben werden muss. Anhand des Beispiels der Klasse Luftfahrzeug erhalten wir also:
+			
+				public abstract class Luftfahrzeug {
+					public abstract void Starten();
+					[...]
+				}
+			
+			Eine abstrakte Klasse kann auch Methoden enthalten die nicht abstrakt sind. Wichtig ist weiterhin, dass eine abstrakte Klasse nicht instanziiert werden kann.
+			Weiterhin ist zu beachten, dass eine Subklasse alle Member die abstrakt sind neu implementieren muss. Tut sie dies nicht muss sie zwingendermaßen auch als abstrakte Klasse gekennzeichnet werden.
+			Wie bereits erwähnt muss jede Klasse die ein abstraktes Member besitzt selber abstrakt sein, jedoch kann eine Klasse als abstrakt definiert sein ohne ein abstract Member zu besitzen. Damit wird vermieden, dass diese Klasse instanziiert werden kann und erzwingt somit, dass diese Klasse abgeleitet werden muss.
 		
 		
 			
