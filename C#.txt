@@ -1400,7 +1400,7 @@
 		
 			Das Prolem beim verdecken von Basisklassenmethoden liegt auf der Hand. Wird vergessen eine Basisklassenmethode in einer Subklasse zu verdecken, wird die Subklasse immer die Methode der Basisklasse aufrufen was evtl. zu Fehlern führen kann. 
 			
-			Hier hilft uns das Model der abstrakten Methoden weiter. An und für sich ist es nicht notwendig die Methode Starten() in der Basisklasse zu implementieren. Sie wurde dort nur definiert, damit sie jeder Subklasse zu verfügung steht. Da diese Methode jedoch von jeder Subklasse Typspezifisch neu implementiert werden muss lassen wir den gesamten Anweisungsblock einfach weg und erweitern die Methode um den Modifizierer abstract.
+			Hier hilft uns das Model der abstrakten Methoden weiter. An und für sich ist es nicht notwendig die Methode Starten() in der Basisklasse zu implementieren. Sie wurde dort nur definiert, damit sie jeder Subklasse zu verfügung steht. Da diese Methode jedoch von jeder Subklasse Typspezifisch neu implementiert werden muss, lassen wir den gesamten Anweisungsblock einfach weg und erweitern die Methode um den Modifizierer abstract.
 			
 			Dieser zwingt jede Subklasse die Methode neu zu implementieren sofern die Methode genutzt werden soll. Die Methode Starten() müsste als abstrakte Methode in der Basisklasse also wie folgt aussehen:
 			
@@ -1416,7 +1416,59 @@
 			Eine abstrakte Klasse kann auch Methoden enthalten die nicht abstrakt sind. Wichtig ist weiterhin, dass eine abstrakte Klasse nicht instanziiert werden kann.
 			Weiterhin ist zu beachten, dass eine Subklasse alle Member die abstrakt sind neu implementieren muss. Tut sie dies nicht muss sie zwingendermaßen auch als abstrakte Klasse gekennzeichnet werden.
 			Wie bereits erwähnt muss jede Klasse die ein abstraktes Member besitzt selber abstrakt sein, jedoch kann eine Klasse als abstrakt definiert sein ohne ein abstract Member zu besitzen. Damit wird vermieden, dass diese Klasse instanziiert werden kann und erzwingt somit, dass diese Klasse abgeleitet werden muss.
+			
+			Abstrakte Methoden überschreiben
+			
+				Um eine abstrakte Methode zu überschreiben muss diese den Modifizierer override aufweisen. 
+				
+		4.2.3 Virtuelle Methoden
 		
+			Die dritte angesprochene Möglichkeit ist die Implementierung einer virtuellen Methode. Hierbei wird in der Basisklasse die Methode komplett implementiert. In der Subklasse besteht dann eine der drei folgenden Möglichkeiten:
+			
+				- Die abgeleitete Klasse erbt die Methode von der Basisklasse ohne diese weiter zu bearbeiten
+				- Die abgeleitete Klasse verdeckt die Methode mit dem Modifizierer new und
+				- Die abgeleitete Klasse überschreibt die Methode der Basisklasse mit dem Modifizierer override
+				
+			Um den unterschied zwischen den beiden zuletzt genannten Möglichkeiten zuerläutern ist es sinnvoll sich dem dritten elementaren Konzept der Objektorientierung zu widmen: der Polymophie. Bevor wir uns diesem Punkt zuwenden sollten wir uns jedoch mit der Typumwandlung in einer Vererbungshierarchie beschäftigen.
+			
+	4.3 Typumwandlung und Typuntersuchung von Objektvariablen
+	
+		4.3.1 Die implizite Typumwandlung von Objektreferenzen
+		
+			Während die Klasse Luftfahrzeug die allgemeinen Eigenschaften eines solchen beschreibt, sind die Klassen Flugzeug und Hubschrauber als Subklassen dafür zuständig spezifischere Eigenschaften aufzuzeigen.
+			Betrachten wir nun einen Ausschnitt der Klassenhierarchie, nämlich die beiden Klassen Flugzeug und Luftfahrzeug. Gehen wir von der realen Welt aus so ist jedes Flugzeug (also jedes Objekt, dass aus der Klasse Luftfahrzeug instanziiert wurde) gleichzeitig auch ein Luftfahrzeug. Dies gilt jedoch nicht umgekehrt, denn ein Luftfahrzeug kann auch zum Beispiel ein Hubschrauber sein. Ist diese Situation gegeben spricht man von einer "Ist-ein(e)-Beziehung". 
+			
+			Die Vererbung hat Konsequenzen, denn aufgrund dieser Beziehung kann man die Referenz eines Subklassenobjekts einer Basisklassenreferenz zuweisen:
+			
+				Flugzeug flg = new Flugzeug();
+				Luftfahrzeug lfzg = flg;
+				
+			Stehen zwei Klassen in einer Vererbungsbeziehung, kann eine Referenz vom typ der abgeleiteten Klasse der Referenz vom Typ einer Basisklasse zugewiesen werden:
+			
+				Basisklassenreferenz = Subklassenreferenz
+				
+			Hierbei ist zu beachten, dass immer implizit konvertiert wird.
+			
+			Die beiden Variablen flg und lfzg referenzieren den selben Speicherbereich. Hierbei ist jedoch zu beachten, dass die Laufzeitumgebung lfzg nur als Objekt der Klasse Luftfahrzeug ansieht und nicht als Flugzeug. Damit hat lfzg auch keinen Zugriff auf die Member der Subklasse die diese ausmachen.
+			
+			Bei einer Zuweisung einer Subklassenreferenz zu einer Basisklassenreferenz müssen alle Member der links vom Zuweisungsoperator angegebenen Referenz einen konkreten Bezug zu einem Member der rechts vom Zuweisungsoperator stehenden Referenz haben. Faktisch bedeutet das, dass ein Flugzeug immer einen Hersteller sowie ein Baujahr hat, da dies durch die Basisklasse angegeben ist.
+			
+			Gehen wir von folgender Methodendefinition aus:
+			
+				public void DoSomething(Luftfahrzeug lfzg) {
+					[...]
+				}
+		
+			Wie zu sehen ist verlangt die Methode DoSomething() einen Parameter vom Typ Luftfahrzeug. In diesem Fall können wir uns den Fakt zunutze machen, dass ein Objekt der Subklasse Flugzeug auch immer ein Objekt der Klasse Luftfahrzeug ist. So ist
+			
+				Flugzeug flg = new Flugzeug();
+				@object.DoSomething(flg);
+				
+			durchaus eine valide Parameterübergabe, da das Objekt flg alle Member enthällt, die durch die Methode verlangt werden. Faktisch kann also jedes Objekt der Luftfahrzeug Klasse sowie deren Subklassen übergeben werden.
+			
+			Da diese Methode in der Luftfahrzeug Klasse definiert ist, steht diese sowohl der Flugzeug Klasse als auch der Hubschrauber Klasse zur Verfügung was uns die doppelte implementierung erspart. Weiterhin gibt uns diese Typumwandlung die Möglichkeit weitere Subklassen von Luftfahrzeug zu erzeugen und trotzdem die Funktionalität der Methode zu gewährleisten da, wie mehrfach erwähnt, ein Objekt einer Subklasse auch immer ein Objekt der Basisklasse ist.
+			
+		4.3.2 Die explizite Typumwandlung von Objektreferenzen
 		
 			
 		
