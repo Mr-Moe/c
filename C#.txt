@@ -1470,7 +1470,59 @@
 			
 		4.3.2 Die explizite Typumwandlung von Objektreferenzen
 		
+			Es ist möglich die Basisklassenreferenz explizit in eine Subklassenreferenz umzuwandeln sofern diese in einer Vererbungsbeziehung stehen. Hierbei ist zu beachten, dass der Zieldatentyp in runden Klammern geschrieben wird:
 			
+				Subklassenreferenz = (Zieldatentyp) Basisklassenreferenz
+				
+			Eine horizontale Typkonvertierung (in usnerem Beispiel also von Flugzeug in Hubschrauber) ist nicht gestattet.
+			
+		4.3.3 Typumwandlung mit dem is Operator
+		
+			Es kann nötig sein ein typspezifisches Member mit einer Basisklassenreferenz aufzurufen. Hierzu bietet sich der is Operator an. Sehen wir uns hierzu folgendes Codefragment an:
+			
+			
+				public void DoSomething(Luftfahrzeug lfzg) {
+					if(lfzg != null) {
+						if(lftzg is Flugzeug) {
+							Cojnsole.WriteLine("Spannweite: ", ((Flugzeug)lfzg).Spannweite);
+						}
+					}
+					else if(lfzg is Hubschrauber) {
+						Console.WriteLine(Rotor: ", ((Hubschrauber)lfzg).Rotor);
+					}
+					else {
+						Console.WriteLine("Unbekannter Typ");
+					}
+				}
+			
+			Wie zu erkennen ist, prüfen wir in disem Codefragment, ob es möglich ist, die Referenz lfzg in den Typ Flugzeug bzw. Hubschrauber zu konvertieren. Zu beachten ist hierbei, dass wir vorher auf null prüfen, da diese Methode auch mit einer null Referenz aufgerufen werden könnte. Weiterhin fällt die Umklammerung der Konvertierung auf:
+			
+				((Hubschrauber)lfzg).Rotor
+				
+			Dies ist vonnöten, da der Punkt Operator stärker bindet als die Konvertierung. Mit den Klammern sorgen wir dafür, dass erst konvertiert wird und danach die nötige Methode aufgerufen wird.
+			
+		4.3.4 Typumwandlung mit dem as Operator
+		
+			Der as Operator verhällt sich ähnlich wie die explizite konvertierung im zuvor behandelten Punkt. So führt
+			
+				Flugzeug flg = lfzg as Flugzeug;
+				
+			zum gleichen Ergebnis wie die vorher genannte Konvertierung
+			
+				Flugzeug flg = (Flugzeug)lfzg;
+				
+			Der Unterschied zwischen dem is- und dem as-Operator ist jedoch, dass der is-Operator bei einer nicht durchführbaren Konvertierung eine Exception wirft, während der as-Operator den Wert null zurückgibt, wenn eine Konvertierung nicht möglich ist. Damit eignet sich der as-Operator sehr gut für if Abfragen, da wir damit auf valide Konvertierungen
+			
+				if(lfzg as Flugzeug != null)
+				
+			durchführen können.
+			
+			Zusätzlich ist zu erwähnen, dass der as-Operator nur auf Referenztypen genutzt werden kann.
+			
+	4.4 Polymophie
+	
+		
+				
 		
 			
 			
