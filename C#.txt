@@ -1521,9 +1521,40 @@
 			
 	4.4 Polymophie
 	
+		Um im weiteren Verlauf dieses Kapitels ein Verständnis aufzubauen sei folgender Code gegeben:
 		
+			static void Main(string[] args) {
+				Luftfahrzeug[] arr = new Luftfahrzeug[4];
+				arr[0] = new Flugzeug();
+				arr[1] = new Hubschrauber();
+				arr[2] = new Hubschrauber();
+				arr[3] = new Flugzeug();
 				
+				foreach(Luftfahrzeug temp in arr) {
+					temp.Starten();
+				}
+				Console.ReadLine();
+			}
 		
+		Wie unschwer zu erkennen ist wird innerhalb der Main Methode ein Array mit dem Bezeichner arr vom Typ Luftfahrzeug erstellt. Dieses wird mit den Referenzen auf die Subklassen Flugzeug und Hubschrauber gefüllt. Danach wird mit einer foreach Schleife auf jedes Element des Arrays die Funktion Starten aufgeführt. Zu beachten ist hierbei, dass die temporäre Schleifenvariable temp vom Typ der Basisklasse ist, also Luftfahrzeug.
+		
+		4.4.1 Die klasse Methodenimplementierung
+		
+			An dieser stelle wollen wir die Klasse Methodenimplementierung in der Basisklasse testen. Die beiden abgeleiteten Klassen sollen die geerbte Methode Starten() mit dem Modifizierer new überdecken:
+			
+				public class Luftfahrzeug {
+					public void Starten() {
+					Console.WriteLine("Das Luftfahrzeug startet.");
+					}
+				}
+				
+				public class Flugzeug : Luftfahrzeug {
+					public new void Starten() {
+						Console.WriteLine("Das Flugzeug startet.");
+					}
+				}
+				
+			Wenn wir die oben angegebene Anwendung ausführen so kommen wir zu dem Ergebnis, dass vier mal "Das Luftfahrzeug startet" ausgegeben wird. Dies ist dem Fakt geschuldet, dass der Methodenaufruf an die Basisklasse statisch gebunden wird. Statisches Binden bedeutet, dass zur kompilierzeit die Operation bereits festgelegt wird. Der Compiler stellt fest von welchem Typ das Objekt ist, auf dem die Methode aufgerufen wird, und erzeugt den entsprechenden Code. Statisches Bindenführt also dazu, dass die Methode der Basisklasse aufgerufen wird, obwohl die neu implementierte Methode genutzt werden sollte.
 			
 			
 		
