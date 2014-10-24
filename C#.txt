@@ -1689,9 +1689,196 @@
 		
 			Analog zur Ableitung, also der Vererbung einer Klasse spricht man bei einer Schnittstelle von ihrer Implementierung. Wie bei abstrakten Klassen muss auch jedes Member eines Interfaces implementiert werden, wenn man nicht möchte, dass die angegebene Klasse ebenfalls eine abtrakte sein soll. Ein Interface wird hinter den Klassenbezeichner geschrieben, der dieses implementieren soll, getrennt mit einem Doppelpunkt. An und für sich kann man in die im Interface enthaltenen Methoden jeden Code schreiben den man möchte. Dies würde jedoch den Sinn eines Interface verfehlen. Man sollte sich also strikt an die Dokumentation eines Interface halten um herauszufinden wofür die jeweiligen Member zuständig sein sollen und wie diese zu implementieren sind. Im Umkehrschluss ist ein Interface ohne Dokumentation vollkommen wertlos.
 			
+			Im Gegensatz zur Vererbung darf eine Klasse mehrere Interfaces implementieren. Hierzu kann man einfach die zu implemtierenden Interfaces kommagetrennt voneinander hinter der erwähnten Notation angeben. Weiterhin kann eine Klasse die ein oder mehrere Interfaces implementiert durchaus auch eine Basisklasse haben von der sie erbt. Diese wird vor den zu implementierenden Interfaces notiert. Folgende Vererbungs- bzw. Iplementierungsstruktur ist also vollkommen legitim:
 			
+				class Document : Frame, ICopy, IDisposable {
+					[...]
+				}
+				
+			Es ist sehr wichtig, dass ein einmal veröffentlichtes (also in einer Klasse genutztes) Interface auf keinen Fall im nachhinein geändert werden darf. Mit dem implementieren eines Interface geht die Klasse die verPflichtung ein jede Methode dieser zu implementieren. Sollte sich die Schnittstelle ändern, ist auch die Implementierung selbiger hinfällig. Wenn ein Interface erweitert oder geändert werden soll, ist es vonnöten ein neues zu schreiben. 
+			
+			Ein Member aus einem interface kann ausschließlich public sein. Weiterhin sind die Schlüsselwörter abstract und virtual erlaubt, const und static hingegen sind nicht gestattet. Weiterhin ist zu beachten, dass die Methoden einer Schnittstelle innerhalb der sie implementierenden Klasse immer polymorphes verhalten. Dies gilt jedoch nicht für Klassen die eine Interface implementierende Klasse als Basisklasse haben. Die Subklasse könnte die Schnittstellenmethode mit dem Schlüsselwort new überdecken. Soll die Schnittstellenmethode der Subklasse jedoch polymorph angeboten werden, so muss sie innerhalb der Basisklasse als vitual signiert werden.
+			
+			
+			Zugriff auf die Schnittstellenmethoden
+			
+				Der Aufruf einer Interfacemethode unterscheidet sich nicht von der einer Klassenmethode. Dieser erfolg wie gwohnt nach erzeugung eines Objekts direkt auf selbigem. Es gibt jedoch noch eine andere Möglichkeit eine Interfacemethode aufzurufen. Hierzu folgendes Beispiel:
+				
+					Document doc = new Document();
+					ICopy copy = doc;
+					copy.Copy();
+					
+				Wie wir sehen ist für diese Möglichkeit trotzdem erst einmal ein Objekt aus der Klasse notwendig. Die Referenz dieser wird im nächsten Schritt der einem Objekt der Schnittstelle übergeben. Erst auf dieser wird dann die Methode übergeben.
+				
+				
+			Mehrdeutigkeit mit expliziter Implementierung vermiden
 		
+				Es kann durchaus vorkommen, dass eine Klasse mehr als ein Interface implementiert und es dadurch zu dem Fall kommt, dass sich die Namen zweier Interfacemethoden gleichen. Hier hilft uns die explizite Implementierung weiter. Hierbei wird beim implementieren der Methode zuerst der Interfacename und darauffolgend der Methodennamen (getrennt durch einen Punkt) angegeben und dann wie gehabt implementiert. Hierzu folgendes Beispiel:
+				
+					// definition der beiden Interfaces mit einer gleichen Property "Caption"
+				
+					public interface ICopy {
+						string Caption { get; set;}
+						void Copy();
+					}
+					
+					public interface IAddress {
+						strig Caption { get; set; }
+					}
+					
+					//lösung der Problematik durch expliziete Implementierung der Interfaces
+					
+					class Document : ICopy, IAddress {
+						void ICopy.Caption() {
+							Console.WriteLine("Die Caption Methode in ICopy");
+						}
+						
+						void IAddress.Caption() {
+							Console.WriteLine("Die Caption Methode in IAddress");
+						}
+					}
+					
+				Eigentlich würde es in diesem Fall (nur zwei Interface Methoden mit dem selben Bezeichner) ausreichen nur eine davon expliziet zu implementiern.
+				
+				Es ist zu beachten, dass bei der explizieten Implementierung einer Interfacemethode keine Zugriffsmodifizierer erlaubt sind. Dies gilt auch für Modifikatoren wie abstract, virtual, override oder static. Weiterhin ist zu beachten, dass eine explizit implementierte Interfacemethode nur über eine Referenz des Interfaces in das diese gehört aufgerufen werden kann. An dieser Stelle kommen wir zurück zur oben erwähnten zweiten Möglichkeit eine Interfacemethode aufzurufen. Im angegebenen Fall der expliziten Implementierung ist diese zwingend erforderlich. Hierzu folgendes Beispiel:
+				
+					Document doc = new Document();
+					ICopy copy = doc;
+					copy.Caption = "Dokumentkopie";
+					IAddress address = doc;
+					address.Caption = Bremen;
+				
+				
+			Schnittstellen die selbst Schnittstellen implementieren
 			
+				Es ist möglich, mehrere Schnittstellen miteinander zu kombinieren. Hierzu folgendes Beispiel:
+				
+					public interface ICompare {
+						bool Compare (object obj);
+					}
+					
+					public interface ICopy : ICompare {
+						void Copy();
+					}
+					
+				Wenn eine Klasse nun die Interfacemethode Copy aus dem Interface ICopy nutzen möchte muss diese auch die Interfacemethode Compare implementieren.
+				
+		4.8.4 Die Interpretation der Schnittstellen
+		
+			Nun kann man sich natürlich nach dem Sinn eines Interface fragen, da man die darin enthaltenen Methoden auch einfach in der entsprechenden Klasse definieren könnte. Es ist jedoch anzumerken, dass es zwei Punkte gibt die das Dasein der Interfaces legitimiert:
+			
+			- Mit den Schnittstellen wird das Fehlen der Mehrfachvererbung in C# ersetzt ohne jedoch deren gravierende Nachteile in Kauf nehmen zu müssen.
+			
+			- Mit einer Schnittstelle kann ein Typ vorgegeben werden, dessen exakte Typangabe nicht bekannt ist.
+			
+			Schnittstellen als Ersatz der Mehrfachvererbung
+			
+				Der Vorteil eines Interface kommt dann zum tragen, wenn wir ein Interface dafür nutzen Beziehungen zwischen Objekten herzustellen die sonst in C# nicht möglich wären. Wenn wir uns dem Beispiel aus einem der früheren Abschnitte zuwenden (gemeint ist die GraficCircle Klasse), so finden wir sehr schnell den Nutzen von Interfaces im bezug zum Ersatz der Mehrfachvererbung.
+				
+				Gehen wir davon aus, dass neben der Klasse GraficCircle, die die Methode Draw() enthällt, eine weitere Klasse mit namen GraficRectangle besteht, die die gleiche Methode besitzt. Hierfür wäre es also möglich ein Interface namens IDraw zu programmieren, welches die Draw() Methode bereitstellt. In diesem Szenario würde der Aufwand jedoch erheblich steigen und die Komplexität ebenfalls unnötig höher werden. Der Nutzen hingegen würde nur bedingt ersichtlich. Anders ist es jedoch nun, wenn wir eine neue fiktive Klasse Auto hinzufügen. Hierzu ist zu sagen, dass in diesem Beispiel sowohl GraficCircle als auch GraficRectangle in der Vererbungshierarchie eine Basisklasse namens GeometricObjectt hat, von der die Basisfunktionalitäten bereitgestellt werden. Die Autoklasse hingegen ist kein geometrisches Objekt und steht damit nicht mit der Klasse GeometricObjectt in Verbindung.
+				
+				Nichtsdestotrotz kann auch ein Auto gezeichnet werden, was dazu führt, dass wir auch in der Auto Klasse das Interface IDraw implementieren werden. An dieser Stelle finden wir nun die Verbindung zum Ersatz der Mehrfachvererbung. Da sowohl Auto als auch GraficCircle und GraficRectangle die Schnittstelle IDraw implementieren ist es möglich diese zum Beispiel in ein Array vom Typ IDraw zu legen. Dadurch, dass jedes der Objekte IDraw als Schnittstelle implementiert ist es für diese Objekte möglich in einer direkten Beziehung zu stehen obwohl sie vollkommen unterschiedliche Basisklassen haben.
+				
+				Zum Verständnis dieses Sachverhaltes sehen wir und folgende Code Fragmente als Beispiele an:
+				
+					//definition der Klassen GraficCircle, GraficRectangle, Auto und dem Interface IDraw
+					
+					public interface IDraw {
+						void Draw();
+					}
+					
+					public class GraficCircle : GeometricObject, IDraw {
+						[...]
+						
+						public vitual void Draw() {
+							Console.WriteLine("Der Kreis wird gezeichnet");
+						}
+					}
+					
+					public class GraficRectangle : GeometricObject, IDraw {
+						[...]
+						
+						public vitual void Draw() {
+							Console.WriteLine("Das Rechteck wird gezeichnet");
+						}
+					}
+					
+					public class Auto : IDraw {
+						[...]
+						
+						public vitual void Draw() {
+							Console.WriteLine("Das Auto wird gezeichnet");
+						}
+					}
+					
+					
+					Unter Berücksichtigung der Tatsache das wir wissen, dass ein bestimmtes Objekt nicht nur vom Typ seiner Klasse sondern auch immer vom Typ seiner Basisklasse ist (und mit dem Wissen dass IDraw eine Art Basisklasse der oben genannten Objekte ist) ist somit folgendes möglich:
+					
+					//speichern von GraficCircle, GraficRectangle und Auto Objekten unter Zuhilfename von IDraw
+					
+					IDraw[] arr = new IDraw[5];
+					arr[0] = new GraficCircle;
+					arr[1] = new GraficRectangle;
+					arr[2] = new Auto;
+					arr[3] = new GraficCircle;
+					arr[4] = new Auto;
+					
+					Nun ist es uns möglich mit
+					
+					foreach(IDraw item in arr ) {
+						item.Draw();
+					}
+					
+					die jeweilige Methode der einzelnen Klassen aufzurufen da sie durch IDraw miteinander verbunden sind obwohl zwei von ihnen eine komplett unabhänige andere Basisklasse aufweisen die in keiner Beziehung zur Autoklasse steht.
+					
+				Schnittstellen als Ersatz exakter Typangaben
+
+					Nehmen wir an, wir wollen nun ein Circle Objekt mit einem Rectangle Objekt vergleichen. Hierzu wollen wir die Fläche der beiden geometrischen Körper nutzen, damit dies auch möglich ist. Danach wollen wir ein Array erstellen in der diese Objekte dann sortiert werden. Glücklicherweise stellt die Array Klasse eine Methode zur Verfügung mit der es möglich ist, im Array gespeicherte Werte zu vergleichen. Nun stellt sich unweigerlich die Frage wie die Methode (namens Sort() ) das anstellt, da dieser ja nicht bekannt sein kann von welchem Datentyp die zu vergleichenden Objekte sind, da wir diesen ja selbst erstellt haben. Sehen wir uns zur Lösung dieses Problems die für uns relevante Überladung der Sort() Methode an:
+					
+						public static void Sort( Array array, IComparer comparer)
+						
+					Wie unschwer zu erkennen ist, verlangt diese Überladung als ersten Parameter das Array in dem die Sortierung durchegeführt werden soll. Weiterhin sehen wir hier den zweiten Parameter der den Typ IComparer angiebt, welches eine Schnittstelle ist. Natürlich können wir der Methode keine Instanz der Schnittstelle IComparer übergeben, da wir wissen, dass ein Interface nicht instanziiert werden kann. Was die Methode hier verlangt ist die Instanz einer Klasse die das Interface IComparer Implementiert. Hierbei ist es nicht erheblich um welche Klasse es sich handelt, was uns die Möglichkeit gibt Objekte der verschiedensten Klassen miteinander zu vergleichen.
+					
+					Sehen wir uns an dieser Stelle die Schnittstellenmethode Compare() der Schnittstelle ICompare an:
+					
+						int Compare(Object x, Object y);
+						
+					Da die Methode Sort() der Klasse Array natürlich nicht wissen kann anhand welcher Kriterien sie zwei Objekte miteinander vergleichen wollen, ist dies der Teil der durch die Interfacemethode dargestellt wird un den wir damit selbst programmieren müssen. Was wir jedoch wissen ist, dass die Methode Sort() intern folgendermaßen aufgrund des Rückgabewertes von der Compare() Interfacemethode sortiert:
+					
+						Wert			Bedingung
+						
+						< 0 			x ist kleiner als y
+						0				x und y sind gleich große
+						> 0				x ist größer als y
+						
+					Damit haben wir alle Informationen die wir brauchen um die Interfacemethode Compare zu implementieren. Sehen wir uns zusammenfassend dazu folgendes Programm an (wir implementieren an dieser Stelle nur die Interfacemethode Compare() und ignorieren in diesem Beispiel alle weiteren. Wie wir wissen wäre dies in einem richtigen Programm nicht möglich. Weiterhin gehen wir davon aus, dass wir in der Klasse GeometricObject eine Methode Bigger() implementiert haben die in der Lage ist zwei Objekte anhand ihrer Oberfläche zu vergleichen.):
+					
+						class Program {
+							static void Main(string[] args) {
+								GeometricObject[] arr = new GeometricObject[5]
+								arr[0] = new Circle(34);
+								arr[1] = new Rectangle(10, 230);
+								arr[2] = new GraficCircle(37);
+								arr[3] = new Circel(20);
+								arr[4] = new GraficRectangle(12, 70);
+							}
+							
+							Array.Sort(arr, new ComparerClass());
+							foreach(GeometricObject item in arr) {
+								Console.WriteLine(item.ToString());
+							}
+							Console.ReadLine();
+						}
+						
+						class ComparerClass : IComparer {
+							public int Compare(object x, object y) {
+								return ((GeometricObject)x).Bigger((GeometricObject)y);
+							}
+						}
+						
+					Hiermit ist gezeigt, dass Interfaces die direkte Typangabe umgehen können. Der Methode Sort() ist zu keinem Zeitpunkt bekannt von welchem Typ das Objekt ist, dass ihr übergeben wird. Da sie jedoch davon ausgehen kann, dass das übergebene Objekt eine Instanz einer Klasse ist, die IComparer implementiert, kann es diese Schnittstelle nutzen um in Verbindung mit dieser Klasse zu treten. Dies geschiet logischerweise mit der Interface Compare() auf die sich sowohl die Methode Sort() der Klasse Array als auch (in unserem Fall) die Klasse GeometricObject verlassen kann.
+				
+				
 			
 			
 			
