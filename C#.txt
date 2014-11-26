@@ -1556,8 +1556,75 @@
 				
 			Wenn wir die oben angegebene Anwendung ausführen so kommen wir zu dem Ergebnis, dass vier mal "Das Luftfahrzeug startet" ausgegeben wird. Dies ist dem Fakt geschuldet, dass der Methodenaufruf an die Basisklasse statisch gebunden wird. Statisches Binden bedeutet, dass zur kompilierzeit die Operation bereits festgelegt wird. Der Compiler stellt fest von welchem Typ das Objekt ist, auf dem die Methode aufgerufen wird, und erzeugt den entsprechenden Code. Statisches Bindenführt also dazu, dass die Methode der Basisklasse aufgerufen wird, obwohl die neu implementierte Methode genutzt werden sollte.
 			
-			
+		4.4.2 Abstrakte Methoden
 		
+			Nun wollen wir den Code so ändern, dass die Methode Starten() abstrakt ist. Wir gehen weiterhin davon aus, dass die beiden Subklassen Flugzeug und Hubschrauber diese Methode implementieren:
+			
+				public abstract class Luftfahrzeug {
+					public abstract void Starten();
+				}
+				
+				public class Flugzeug : Luftfahrzeug {
+					public override void Starten() {
+						Console.WriteLine("Das Flugzeug startet.");
+					}
+				}
+				
+				public class Hubschrauber : Luftfahrzeug {
+					public override void Starten() {
+						Console.WriteLine("Der Hubschrauber startet.");
+					}
+				}
+			
+			In diesem Beispiel wird die folgende Ausgabe erzeugt:
+			
+				Das Flugzeug startet.
+				Der Hubschrauber startet.
+				Der Hubschrauber startet.
+				Das Flugzeug startet.
+				
+			Hiermit ist bewiesen, dass durch das nutzen der abstrakten Methode und dem damit verbundenen überschreiben innerhalb der Subklassen, die Typspizifische Methode aufgerufen wird. Dies ist dem Fakt geschuldet, dass die Bindung des Methodenaufrufs dynamisch zur Laufzeit geschied, was einen gravierenden Unterschied zum davor gegebenen Beispiel darstellt.
+			
+			Die Fähigkeit, auf einer Basisklassenreferenz die typspezifische Methode aufzurufen, wird als Polymorphie bezeichnet. Diese bildet neben der Vererbung und der Kapselung die dritte Säule der Objektorientierung.
+			
+		4.4.3 Virtuelle Methoden
+		
+			Wie wir bereits gesagt haben ist das Erstellen einer virtuellen Methode eine Art Mischform der beiden zuvor genannten Möglichkeiten. Virtuelle Methoden sind als ein Angebot einer Basisklasse an ihre Subklassen zu verstehen, da diesen die Möglichkeit gegeben ist, entweder die in der Basisklasse klassisch implementierte Methode entweder einfach zu erben, sie nicht-polymorph zu überdecken oder sie polymorph zu überschreiben. Wie bereits erwähnt bleiben die Schlüsselwörter new bzw override wie in den zurgenannten Möglichkeiten gleich, je nachdem welche der beiden genutzt werden soll.
+			
+			Zusammenfassend ist also zu sagen, dass der Modifizierer override immer Polymorphie signalisiert, egal ob es sich um eine virtuelle oder eine abstrakte Methode handelt, da sie sich genau gleich verhalten. Im Gegenzug signalisiert new immer nicht polymorphes verhalten.
+			
+			
+			Weiter gehened Betrachtungen
+			
+				Es ist durchaus möglich innerhalb einer Vererbungskette ein gemischtes Verhalten hervorzurufen. Hierzu sehen wir usn folgendes Codefragment an:
+				
+					public class Luftfahrzeug {
+						public virtual viod Starten() {
+							[...]
+						}
+					}
+					
+					public class Flugzeug : Luftfahrzeug {
+						public override void Starten() {
+							[...]
+						}
+					}
+					
+					public class Segelflugzeug : Flugzeug {
+						public new viod Starten() {
+							[...]
+						}
+					}
+					
+				Wie zu erkennen ist, überschreibt die Klasse Flugzeug die virtuelle Methode Starten der Basisklasse polymorph. Segelflugzeug, die direkte Subklasse von Flugzeug überdeckt jedoch nur die Methode Starten(). Erzeugen wir nun die Objektreferenz
+				
+					Luftfahrzeug lfzg = new Segelflugzeug();
+					
+				und rufen auf dieser die Methode Starten() auf, wird die Methode Starten() aus der Klasse Flugzeug aufgerufen, da diese die Methode Starten() aus der Basisklasse Luftfahrzeug polymorph überschreibt. Da in Segelflugzeug jedoch nur mit new überdeckt wird, wird in diesem Fall auch die Methode Starten() der Klasse Flugzeug aufgerufen, sobald wir diese mit
+				
+					Luftfahrzeug lfzg = new Segelflugzeug;
+					
+				aufrufen.
 			
 			
 			
