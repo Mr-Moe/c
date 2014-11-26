@@ -12,7 +12,7 @@
 		
 		1.2.6 Das .NET Framework
 			
-			Ein Framework ist eine Art Gerüst in dem Anwendungen entwichelt, kompiliert und ausgeführt werden. Es spiegelt also die Gesamtheit vom Code bis zum ausgeführten Programm wieder.
+			Ein Framework ist eine Art Gerüst in dem Anwendungen entwickelt, kompiliert und ausgeführt werden. Es spiegelt also die Gesamtheit vom Code bis zum ausgeführten Programm wieder.
 			
 			Die CLS sowie die CTS sind ein Teil dieses Frameworks. Weitere Teile sind die »Common Language Runtime« (CLR) sowie die Klassenbibliothek des .NET.
 		
@@ -371,7 +371,7 @@
 			=				x = y weißt x den Wert von y zu
 			+=				x += y weißt x den Wert von x + y zu
 			-=				x -= y weißt x den Wert von x - y zu
-			*=				x += y weißt x den Wert von x + y zu
+			*=				x += y weißt x den Wert von x * y zu
 			/=				x /= y weißt x den Wert von x / y zu
 			%=				x %= y weißt x den Wert von x % y zu
 			&=				x &= y weißt x den Wert von x & y zu
@@ -390,7 +390,7 @@
 		
 			Operator			Beschreibung
 			
-			.					Der Punktoperator wird für den Zugriff auf Eigenschaften oder Methoden von Klassen verwendet
+			.					Der Punktoperator wird für den Zugriff auf Eigenschaften oder Methoden von Klassen 	verwendet
 			[]					Der [] Operator wird für Arrays, Indexer und Attribute verwendet
 			()					Dieser Operator wird entweder zur Bestimmung der Reihenfolge von Operationen oder zur Typkonvertierung verwendet
 			?:					Dies ist die Kurzschreibweise einer if Anweisung
@@ -516,7 +516,7 @@
 			If Anweisungen lassen sich beliebig oft schachteln um komplexere Fallunterscheidungen durchführen zu können. Dies stellt uns jedoch vor ein Problem.
 			
 				Console.Write("Geben Sie eine Zahl zwischen 0 und 9 ein: ");
-				int zahl=Convert.ToInt32(Console.ReadLine());
+				int zahl = Convert.ToInt32(Console.ReadLine());
 				if(zahl >= 0 && zahl <= 9)
 				if(zahl <= 5)
 				Console.Write("Die Zahl ist 0,1,2,3,4 oder 5");
@@ -959,15 +959,15 @@
 						
 					nicht zulässig ist, da erst mit Aufruf der Methode ein wert berechnet wird der übergeben werden soll.
 					
-				Parameter m8it dem Modifizierer out
+				Parameter mit dem Modifizierer out
 				
 					Der Modifizierer out ähnelt dem Modifizierer ref. Er wird genauso angegeben (bei der Übergabe und in der Parameterliste der Methode) hat aber die Unterschiede, dass bei der Übergabe der Referenz nicht zwingend eine initialisierte Variable dahinterstehen muss. Dementsprechen muss innerhalb einer Methode deren Argumente mit out übergeben werden jedoch eine Wertzuweisung stattfinden.
 					
-					Allgemein ist bei der Nutzung von ref bzw. out zu beachten, dass wir hierbei mit den Orginalwerten arbeiten udn diese manipulieren. Dies kann dazu führen, dass im weiteren Programmverlauf Änderungen vorgenommen werden, die so nicht vorgesehen waren, wenn man ref und out unbedacht einsetzt.
+					Allgemein ist bei der Nutzung von ref bzw. out zu beachten, dass wir hierbei mit den Orginalwerten arbeiten und diese manipulieren. Dies kann dazu führen, dass im weiteren Programmverlauf Änderungen vorgenommen werden, die so nicht vorgesehen waren, wenn man ref und out unbedacht einsetzt.
 					
 				Übergabe von Objekten
 				
-					Ein Objekt wird prinzipiell als Referenz übergeben. Dies führt dazu, dass bestimmte Werte innerhalb des Orginalobjekts geändert werden. um dies zu verhindern muss erst eien Kopie des Objekts erstellt werden bevor man Werte darin ändert.
+					Ein Objekt wird prinzipiell als Referenz übergeben. Dies führt dazu, dass bestimmte Werte innerhalb des Orginalobjekts geändert werden. um dies zu verhindern muss erst eine Kopie des Objekts erstellt werden bevor man Werte darin ändert.
 					
 				Methodenüberladung und Parametermodifizierer
 				
@@ -985,7 +985,7 @@
 						
 				Der Modfizierer params
 				
-					Es kannd urchaus vorkommen, dass noch nicht bekannt ist, wieviele Argumente an die Methode übergeben werden sollen. Oder es soll möglich sein rein theoretisch unendlich viele Argumente als Parameter zu übergeben. Hierfür gibt es den Parameter params. Wird an einen params-Parameter mehr als ein Wert übergeben, so werden diese innerhalb eines Arrays (mit dem bezeichner params) übergeben. Will man zum Beispiel eien Methode schreiben die beliebig viele Zazhlen miteinander addieren kann, so amcht es sinn, params zu nutzen um sicherzustellen, dass beliebig viele Argumente übergeben werden können. Es können trotzdem weitere feste "Einzelparameter" angegeben werden. dies würde für unsere Beispielmethode auch sinn machen, da man eine Addition traditionell mit mindestens zwei Zahlen durchführt.
+					Es kannd durchaus vorkommen, dass noch nicht bekannt ist, wieviele Argumente an die Methode übergeben werden sollen. Oder es soll möglich sein rein theoretisch unendlich viele Argumente als Parameter zu übergeben. Hierfür gibt es den Parameter params. Wird an einen params-Parameter mehr als ein Wert übergeben, so werden diese innerhalb eines Arrays (mit dem bezeichner params) übergeben. Will man zum Beispiel eine Methode schreiben die beliebig viele Zazhlen miteinander addieren kann, so macht es sinn, params zu nutzen um sicherzustellen, dass beliebig viele Argumente übergeben werden können. Es können trotzdem weitere feste "Einzelparameter" angegeben werden. dies würde für unsere Beispielmethode auch Sinn machen, da man eine Addition traditionell mit mindestens zwei Zahlen durchführt.
 					
 				Mit dem params-Parameter gehen folgende Regeln einher:
 				
@@ -1538,7 +1538,7 @@
 		
 		Wie unschwer zu erkennen ist wird innerhalb der Main Methode ein Array mit dem Bezeichner arr vom Typ Luftfahrzeug erstellt. Dieses wird mit den Referenzen auf die Subklassen Flugzeug und Hubschrauber gefüllt. Danach wird mit einer foreach Schleife auf jedes Element des Arrays die Funktion Starten aufgeführt. Zu beachten ist hierbei, dass die temporäre Schleifenvariable temp vom Typ der Basisklasse ist, also Luftfahrzeug.
 		
-		4.4.1 Die klasse Methodenimplementierung
+		4.4.1 Die klassische Methodenimplementierung
 		
 			An dieser stelle wollen wir die Klasse Methodenimplementierung in der Basisklasse testen. Die beiden abgeleiteten Klassen sollen die geerbte Methode Starten() mit dem Modifizierer new überdecken:
 			
@@ -1554,54 +1554,37 @@
 					}
 				}
 				
-			Wenn wir die oben angegebene Anwendung ausführen so kommen wir zu dem Ergebnis, dass vier mal "Das Luftfahrzeug startet" ausgegeben wird. Dies ist dem Fakt geschuldet, dass der Methodenaufruf an die Basisklasse statisch gebunden wird. Statisches Binden bedeutet, dass zur kompilierzeit die Operation bereits festgelegt wird. Der Compiler stellt fest von welchem Typ das Objekt ist, auf dem die Methode aufgerufen wird, und erzeugt den entsprechenden Code. Statisches Bindenführt also dazu, dass die Methode der Basisklasse aufgerufen wird, obwohl die neu implementierte Methode genutzt werden sollte.
+			Wenn wir die oben angegebene Anwendung ausführen so kommen wir zu dem Ergebnis, dass vier mal "Das Luftfahrzeug startet" ausgegeben wird. Dies ist dem Fakt geschuldet, dass der Methodenaufruf an die Basisklasse statisch gebunden wird. Statisches Binden bedeutet, dass zur kompilierzeit die Operation bereits festgelegt wird. Der Compiler stellt fest von welchem Typ das Objekt ist, auf dem die Methode aufgerufen wird, und erzeugt den entsprechenden Code. Statisches Binden führt also dazu, dass die Methode der Basisklasse aufgerufen wird, obwohl die neu implementierte Methode genutzt werden sollte.
 			
 		4.4.2 Abstrakte Methoden
 		
-			Nun wollen wir den Code so ändern, dass die Methode Starten() abstrakt ist. Wir gehen weiterhin davon aus, dass die beiden Subklassen Flugzeug und Hubschrauber diese Methode implementieren:
+			Nun nutzen wir die Möglichkeit die Methode als abstrakte Methode zu implementieren. Hierzu nutzen wir das Schlüsselwort abstract in der Methodendefinition der Basisklasse und überschreiben diese in der Subklasse mit dem schlüsselwort overwrite. Hierbei ist zu beachten, dass die Basisklasse ebenfalls als abstract deklariert werden muss. Hierzu folgendes Beispiel:
 			
 				public abstract class Luftfahrzeug {
 					public abstract void Starten();
 				}
 				
-				public class Flugzeug : Luftfahrzeug {
+				public abstract class Flugzeug : Luftfahrzeug {
 					public override void Starten() {
 						Console.WriteLine("Das Flugzeug startet.");
 					}
 				}
-				
-				public class Hubschrauber : Luftfahrzeug {
-					public override void Starten() {
-						Console.WriteLine("Der Hubschrauber startet.");
-					}
-				}
 			
-			In diesem Beispiel wird die folgende Ausgabe erzeugt:
-			
-				Das Flugzeug startet.
-				Der Hubschrauber startet.
-				Der Hubschrauber startet.
-				Das Flugzeug startet.
-				
-			Hiermit ist bewiesen, dass durch das nutzen der abstrakten Methode und dem damit verbundenen überschreiben innerhalb der Subklassen, die Typspizifische Methode aufgerufen wird. Dies ist dem Fakt geschuldet, dass die Bindung des Methodenaufrufs dynamisch zur Laufzeit geschied, was einen gravierenden Unterschied zum davor gegebenen Beispiel darstellt.
-			
-			Die Fähigkeit, auf einer Basisklassenreferenz die typspezifische Methode aufzurufen, wird als Polymorphie bezeichnet. Diese bildet neben der Vererbung und der Kapselung die dritte Säule der Objektorientierung.
+			Mit dieser Implementierung ist gewährleistet, dass die Bindung dynamisch und damit zur Laufzeit stattfindet. Dies resultiert, bei einer neuen Asuführung der Anwendung in einem vollkommen anderen Resultat. In diesem Fall wird nämlich jeweils die richtige (typspizifische) Methode aufgerufen.
+
+			Die Fähigkeit auf einer Basisklassenreferenz eine Typspezifische Methode aufzurufen wird als Polymorphie bezeichnet. Polymorphie bildet neben der Datenkapselung und der Vererbung die dritte Säule der Objektorientierung. Besagte Polymorphie bezeichnet ein Konzept der Objektorientierung, das besagt, dass Objekte bei gleichen Methodenaufrufen unterdschiedlich reagieren können.
 			
 		4.4.3 Virtuelle Methoden
 		
-			Wie wir bereits gesagt haben ist das Erstellen einer virtuellen Methode eine Art Mischform der beiden zuvor genannten Möglichkeiten. Virtuelle Methoden sind als ein Angebot einer Basisklasse an ihre Subklassen zu verstehen, da diesen die Möglichkeit gegeben ist, entweder die in der Basisklasse klassisch implementierte Methode entweder einfach zu erben, sie nicht-polymorph zu überdecken oder sie polymorph zu überschreiben. Wie bereits erwähnt bleiben die Schlüsselwörter new bzw override wie in den zurgenannten Möglichkeiten gleich, je nachdem welche der beiden genutzt werden soll.
-			
-			Zusammenfassend ist also zu sagen, dass der Modifizierer override immer Polymorphie signalisiert, egal ob es sich um eine virtuelle oder eine abstrakte Methode handelt, da sie sich genau gleich verhalten. Im Gegenzug signalisiert new immer nicht polymorphes verhalten.
+			Virtuelle Methoden sind als Angebot der Basisklasse zu betrachten. Der jeweiligen Subklasse ist damit die Möglichkeit gegeben die als virtuell deklatierte Methode entweder einfach zu erben und genau so zu nutzen, diese mit dem Schlüsselwort override polymorph zu überschreiben oder diese nicht polymorph unter Zuhilfename der Schlüsselworts new zu überdecken. Es ist zu beachten, dass die implementierung der Methoden in der jeweiligen Subklasse der in den vorherig beschriebenen Beispielen entspricht, weshalb an dieser Stelle nicht nochmal darauf eingegangen wird.
 			
 			
-			Weiter gehened Betrachtungen
+			Weitergehende Betrachtungen
 			
-				Es ist durchaus möglich innerhalb einer Vererbungskette ein gemischtes Verhalten hervorzurufen. Hierzu sehen wir usn folgendes Codefragment an:
+				Es ist durchaus möglich, dass innerhalb einer Vererbungskette ein gemischtes Verhalten von Überdeckung bzw. Überschreibung einer Methode stattfinden kann. Hierzu sehen wir und folgendes Beispiel an:
 				
 					public class Luftfahrzeug {
-						public virtual viod Starten() {
-							[...]
-						}
+						public virtual void Starten() { }
 					}
 					
 					public class Flugzeug : Luftfahrzeug {
@@ -1611,40 +1594,291 @@
 					}
 					
 					public class Segelflugzeug : Flugzeug {
-						public new viod Starten() {
+						public new void Starten () {
 							[...]
 						}
 					}
 					
-				Wie zu erkennen ist, überschreibt die Klasse Flugzeug die virtuelle Methode Starten der Basisklasse polymorph. Segelflugzeug, die direkte Subklasse von Flugzeug überdeckt jedoch nur die Methode Starten(). Erzeugen wir nun die Objektreferenz
+				Gehen wir nun davon aus, dass wir mit
 				
 					Luftfahrzeug lfzg = new Segelflugzeug();
 					
-				und rufen auf dieser die Methode Starten() auf, wird die Methode Starten() aus der Klasse Flugzeug aufgerufen, da diese die Methode Starten() aus der Basisklasse Luftfahrzeug polymorph überschreibt. Da in Segelflugzeug jedoch nur mit new überdeckt wird, wird in diesem Fall auch die Methode Starten() der Klasse Flugzeug aufgerufen, sobald wir diese mit
+				ein Objekt initialisieren und darauf die Methode Starten() ausführen, so wird in diesem Fall die Methode in der Klasse Flugzeug aufgerufen, da diese die Methode Polymorph überschreibt und diese in Segelflugzeug nur mit new überdeckt wird. Es ist zu beachten, dass eine mit zu überdeckte Methode in einer abgeleiteten Klasse nicht mehr mit dem Schüsselwort override überschrieben werden kann. Ein einmal verloren gegangenes polymorphes Verhalten kann nicht wieder zurückerlangt werden.
 				
-					Luftfahrzeug lfzg = new Segelflugzeug;
+	4.5 Weitere Gesichtspunkte der Vererbung
+	
+		4.5.1 Versiegelte Methoden
+		
+			Standartmäßig kann jede Klasse abgeleitet werden. Möchte man dieses Verhalten unterbinden ist es notwendig diese mit dem Schüsselwort sealed zu versiegeln. Ähnlich verhällt es sich bei Methoden. 
+			
+				class Flugzeug : Luftfahrzeug {
+					public sealed override void Starten() {
+						Console.WriteLine{"Das Flugzeug startet"};
+					}
+				}
+				
+			Eine von Flugzeug abgeleitete Klasse erbt zwar die Methode Starten(), kann diese aber nicht mehr mit override überschreiben. Die Überdeckung mit new ist jedoch immernoch gegeben um eine typspezifische Implementierung der Methode zu gewährleisten. Es ist zu beachten, dass eine als sealed definierte Methode immer auch den Modifizierer override aufweisen muss und weiterhin weder alleine stehen kann noch in Zusammnhang mit dem Schlüsselwort new genutzt werden kann. Dies setzt logischerweise vorraus, dass die Methode in der Basisklasse als vitual definiert wurde.
+			
+		4.5.2 Überladung einer Basisklassenmethode
+		
+			Wie uns bereits bekannt ist spricht man von der Überladung einer Methode innerhalb einer Klasse, wenn sich diese nur in der Anzahl der Parameter die an sie übergeben wird unterscheidet. Der gleiche Begriff hat sich geprägt, wenn eine geerbte Methode in der Subklasse nach den Regeln der Methodenüberladung ergänzt werden muss.
+			
+			Ändern wir nun also nochmals die Methode Starten() der Klasse Flugzeug und überladen diese:
+
+				public class Flugzeug : Luftfahrzeug {
+					public void Starten(double distance) {
+						[...]
+					}
+				}
+				
+			Wenn wir nun ein Objekt flg vom Typ Flugzeug erzeugen und
+			
+				flg.Starten();
+				flg.Starten(300);
+				
+			ausführen, so ist dies nicht nur gestattet, sondern führt auchnoch dazu, dass einmal die Methode der Basisklasse und einmal die der Subklasse aufgerufen wird.
+			
+		4.5.3 Statische Member und Vererbung
+		
+			Statische Member werden an die abgeleitete Klasse vererbt. Statische Methoden können innerhalb der Basisklasse oder unter Angabe der Subklasse auch dort genutzt werden.
+			
+			Gehen wir also von der Methode Bigger(Circle kreis1, Circle kreis2) der Klasse Circle aus, die die Göße zweier Kreisobjekte vergleicht, so funktioniert sowohl der Aufruf
+			
+				Circle.Bigger(kreis1, kreis2);
+				
+			als auch
+			
+				GraphicCircle.Bigger(kreis1, kreis2);
+				
+			wobei die übergebenen Objekte wie gesagt vom Typ Circle sind.
+			
+			Wie bereits gesagt ist die Definition einer statischen Methode mit den Schlüsselwörtern override, virtual oder abstract nicht zulässig, jedoch kann man mit new eine typspezifische Anpassung der statischen Methode vornehmen.
+			
+	4.7 Eingebettete Klassen (Nested Classes)
+	
+		Wird eine Klasse innerhalb einer anderen definiert spricht man von eingebetteten Klassen (Nested class). Dies wird durchgeführt, wenn man eine enge Beziehung zwischen zwei Klassen oder allgemein gesprochen zwei Typen ausdrücken möchte. Eine andere typische Nutzung ist, dass man eine Klasse vor dem Zugriff von außen  schützen will, da diese nur innerhalb der sie umgebenen Klasse Sinn macht. Wenn wir die innere Klasse als public deklarieren ist es uns gestattet ein Objekt dieser inneren Klasse aus der äußeren heraus zu instanziieren. Deklarieren wir die innere Klasse jedoch als private kann man ein Objekt nurnoch innerhalb der inneren Klasse instanziieren und somit haben wir eine abgeschottete Klasse geschaffen. Da dieses Verfahren äußerst selten angewandt wird, soll an dieser Stelle jedoch außer der gegebenen Erwähnung der Möglichkeit nicht weiter darauf eingegangen werden.
+		
+	4.8 Interfaces (Schnittstellen)
+	
+		4.8.1 Einführung in die Schnittstellen
+		
+			Um eine Interface zu verstehen ist es wichtig sich nochmals klarzumachen, was eine Klasse und was ein Objekt ist. Eine Klasse ist eine Art Bauplan und beschreibt die Fähigkeiten eines Objektes während ein Objekt die bereitgestellten Methoden, Ereignisse etc. nutzt um damit faktisch etwas durchzuführen. Kurz gesagt ist eine Klasse also für das bereitstellen von Eigenschaften und Methoden gedacht während ein Objekt aus Daten besteht und diese manipulieren kann. Ein Interface beschreibt niemals Daten und bildet damit das andere Extrem. Faktisch ist ein Interface nicht weiter als ein klassenähnliches Konstrukt, welches ausschließlich aus abstrakten, sprich nicht implementierten Methoden besteht. Damit stellt es diverse Dinge zur Verfügung, die jedoch noch innerhalb der abgeleiteten Klasse implementiert werden muss. Aus diesem Grund spricht man bei Interfaces im Bezug auf die Vererbung auch nicht von Ableitung sondern von Implementierung. 
+			
+		4.8.2 Die Schnittstellendefinition
+		
+			Schnittstellen können 
+			
+				-Methoden
+				-Eigenschaften
+				-Ereignisse und
+				-Indexer
+				
+			vorschreiben. Vorschreiben in dem Fall, da wir wissen, das abstrakte Member von der ableitenden / implementierenden Klasse implementiert werden müssen da sie sonst selbst als abstrakt gekennzeichnet werden müssen.
+			
+			Schnittstellen enthalten selbst keine Codeimplementierungen, sondern nur abstrakte Definitionen. Hierzu folgendes Beispiel:
+			
+				public interface ICopy {
+					string Caption {get; set; };
+					void Copy();
+				}
+				
+			Wie zu erkennen ist, sieht die Definition eines Interface dem einer Klasse sehr ähnlich. Wir nutzen jedoch anstatt des Schlüsselworts class das Schlüsselwort interface. Es ist zu beachten, dass ein Interface nur als public oder als internal deklariert werden kann wobei internal der standart ist, weshalb interfaces die keinen Zugriffsmodifizierer besitzen immer internal sind. Weiterhin ist zu beachten, dass die Member eines Interface auf das Schlüsselwort abstract verzichten können. Eine weitere zu beachtende Konvention ist, dass ein Interfacebezeichner stehts mit einem großen "I" beginnt.
+		
+			
+		4.8.3 Die Schnittstellenimplementierung
+		
+			Analog zur Ableitung, also der Vererbung einer Klasse spricht man bei einer Schnittstelle von ihrer Implementierung. Wie bei abstrakten Klassen muss auch jedes Member eines Interfaces implementiert werden, wenn man nicht möchte, dass die angegebene Klasse ebenfalls eine abtrakte sein soll. Ein Interface wird hinter den Klassenbezeichner geschrieben, der dieses implementieren soll, getrennt mit einem Doppelpunkt. An und für sich kann man in die im Interface enthaltenen Methoden jeden Code schreiben den man möchte. Dies würde jedoch den Sinn eines Interface verfehlen. Man sollte sich also strikt an die Dokumentation eines Interface halten um herauszufinden wofür die jeweiligen Member zuständig sein sollen und wie diese zu implementieren sind. Im Umkehrschluss ist ein Interface ohne Dokumentation vollkommen wertlos.
+			
+			Im Gegensatz zur Vererbung darf eine Klasse mehrere Interfaces implementieren. Hierzu kann man einfach die zu implemtierenden Interfaces kommagetrennt voneinander hinter der erwähnten Notation angeben. Weiterhin kann eine Klasse die ein oder mehrere Interfaces implementiert durchaus auch eine Basisklasse haben von der sie erbt. Diese wird vor den zu implementierenden Interfaces notiert. Folgende Vererbungs- bzw. Iplementierungsstruktur ist also vollkommen legitim:
+			
+				class Document : Frame, ICopy, IDisposable {
+					[...]
+				}
+				
+			Es ist sehr wichtig, dass ein einmal veröffentlichtes (also in einer Klasse genutztes) Interface auf keinen Fall im nachhinein geändert werden darf. Mit dem implementieren eines Interface geht die Klasse die verPflichtung ein jede Methode dieser zu implementieren. Sollte sich die Schnittstelle ändern, ist auch die Implementierung selbiger hinfällig. Wenn ein Interface erweitert oder geändert werden soll, ist es vonnöten ein neues zu schreiben. 
+			
+			Ein Member aus einem interface kann ausschließlich public sein. Weiterhin sind die Schlüsselwörter abstract und virtual erlaubt, const und static hingegen sind nicht gestattet. Weiterhin ist zu beachten, dass die Methoden einer Schnittstelle innerhalb der sie implementierenden Klasse immer polymorphes verhalten. Dies gilt jedoch nicht für Klassen die eine Interface implementierende Klasse als Basisklasse haben. Die Subklasse könnte die Schnittstellenmethode mit dem Schlüsselwort new überdecken. Soll die Schnittstellenmethode der Subklasse jedoch polymorph angeboten werden, so muss sie innerhalb der Basisklasse als vitual signiert werden.
+			
+			
+			Zugriff auf die Schnittstellenmethoden
+			
+				Der Aufruf einer Interfacemethode unterscheidet sich nicht von der einer Klassenmethode. Dieser erfolg wie gwohnt nach erzeugung eines Objekts direkt auf selbigem. Es gibt jedoch noch eine andere Möglichkeit eine Interfacemethode aufzurufen. Hierzu folgendes Beispiel:
+				
+					Document doc = new Document();
+					ICopy copy = doc;
+					copy.Copy();
 					
-				aufrufen.
+				Wie wir sehen ist für diese Möglichkeit trotzdem erst einmal ein Objekt aus der Klasse notwendig. Die Referenz dieser wird im nächsten Schritt der einem Objekt der Schnittstelle übergeben. Erst auf dieser wird dann die Methode übergeben.
+				
+				
+			Mehrdeutigkeit mit expliziter Implementierung vermiden
+		
+				Es kann durchaus vorkommen, dass eine Klasse mehr als ein Interface implementiert und es dadurch zu dem Fall kommt, dass sich die Namen zweier Interfacemethoden gleichen. Hier hilft uns die explizite Implementierung weiter. Hierbei wird beim implementieren der Methode zuerst der Interfacename und darauffolgend der Methodennamen (getrennt durch einen Punkt) angegeben und dann wie gehabt implementiert. Hierzu folgendes Beispiel:
+				
+					// definition der beiden Interfaces mit einer gleichen Property "Caption"
+				
+					public interface ICopy {
+						string Caption { get; set;}
+						void Copy();
+					}
+					
+					public interface IAddress {
+						strig Caption { get; set; }
+					}
+					
+					//lösung der Problematik durch expliziete Implementierung der Interfaces
+					
+					class Document : ICopy, IAddress {
+						void ICopy.Caption() {
+							Console.WriteLine("Die Caption Methode in ICopy");
+						}
+						
+						void IAddress.Caption() {
+							Console.WriteLine("Die Caption Methode in IAddress");
+						}
+					}
+					
+				Eigentlich würde es in diesem Fall (nur zwei Interface Methoden mit dem selben Bezeichner) ausreichen nur eine davon expliziet zu implementiern.
+				
+				Es ist zu beachten, dass bei der explizieten Implementierung einer Interfacemethode keine Zugriffsmodifizierer erlaubt sind. Dies gilt auch für Modifikatoren wie abstract, virtual, override oder static. Weiterhin ist zu beachten, dass eine explizit implementierte Interfacemethode nur über eine Referenz des Interfaces in das diese gehört aufgerufen werden kann. An dieser Stelle kommen wir zurück zur oben erwähnten zweiten Möglichkeit eine Interfacemethode aufzurufen. Im angegebenen Fall der expliziten Implementierung ist diese zwingend erforderlich. Hierzu folgendes Beispiel:
+				
+					Document doc = new Document();
+					ICopy copy = doc;
+					copy.Caption = "Dokumentkopie";
+					IAddress address = doc;
+					address.Caption = Bremen;
+				
+				
+			Schnittstellen die selbst Schnittstellen implementieren
 			
+				Es ist möglich, mehrere Schnittstellen miteinander zu kombinieren. Hierzu folgendes Beispiel:
+				
+					public interface ICompare {
+						bool Compare (object obj);
+					}
+					
+					public interface ICopy : ICompare {
+						void Copy();
+					}
+					
+				Wenn eine Klasse nun die Interfacemethode Copy aus dem Interface ICopy nutzen möchte muss diese auch die Interfacemethode Compare implementieren.
+				
+		4.8.4 Die Interpretation der Schnittstellen
+		
+			Nun kann man sich natürlich nach dem Sinn eines Interface fragen, da man die darin enthaltenen Methoden auch einfach in der entsprechenden Klasse definieren könnte. Es ist jedoch anzumerken, dass es zwei Punkte gibt die das Dasein der Interfaces legitimiert:
 			
+			- Mit den Schnittstellen wird das Fehlen der Mehrfachvererbung in C# ersetzt ohne jedoch deren gravierende Nachteile in Kauf nehmen zu müssen.
 			
+			- Mit einer Schnittstelle kann ein Typ vorgegeben werden, dessen exakte Typangabe nicht bekannt ist.
 			
+			Schnittstellen als Ersatz der Mehrfachvererbung
 			
-			
-			
-			
-			
-			
-	
-	
-			
-			
-			
-			
-			
-			
-			
-			
+				Der Vorteil eines Interface kommt dann zum tragen, wenn wir ein Interface dafür nutzen Beziehungen zwischen Objekten herzustellen die sonst in C# nicht möglich wären. Wenn wir uns dem Beispiel aus einem der früheren Abschnitte zuwenden (gemeint ist die GraficCircle Klasse), so finden wir sehr schnell den Nutzen von Interfaces im bezug zum Ersatz der Mehrfachvererbung.
+				
+				Gehen wir davon aus, dass neben der Klasse GraficCircle, die die Methode Draw() enthällt, eine weitere Klasse mit namen GraficRectangle besteht, die die gleiche Methode besitzt. Hierfür wäre es also möglich ein Interface namens IDraw zu programmieren, welches die Draw() Methode bereitstellt. In diesem Szenario würde der Aufwand jedoch erheblich steigen und die Komplexität ebenfalls unnötig höher werden. Der Nutzen hingegen würde nur bedingt ersichtlich. Anders ist es jedoch nun, wenn wir eine neue fiktive Klasse Auto hinzufügen. Hierzu ist zu sagen, dass in diesem Beispiel sowohl GraficCircle als auch GraficRectangle in der Vererbungshierarchie eine Basisklasse namens GeometricObjectt hat, von der die Basisfunktionalitäten bereitgestellt werden. Die Autoklasse hingegen ist kein geometrisches Objekt und steht damit nicht mit der Klasse GeometricObjectt in Verbindung.
+				
+				Nichtsdestotrotz kann auch ein Auto gezeichnet werden, was dazu führt, dass wir auch in der Auto Klasse das Interface IDraw implementieren werden. An dieser Stelle finden wir nun die Verbindung zum Ersatz der Mehrfachvererbung. Da sowohl Auto als auch GraficCircle und GraficRectangle die Schnittstelle IDraw implementieren ist es möglich diese zum Beispiel in ein Array vom Typ IDraw zu legen. Dadurch, dass jedes der Objekte IDraw als Schnittstelle implementiert ist es für diese Objekte möglich in einer direkten Beziehung zu stehen obwohl sie vollkommen unterschiedliche Basisklassen haben.
+				
+				Zum Verständnis dieses Sachverhaltes sehen wir und folgende Code Fragmente als Beispiele an:
+				
+					//definition der Klassen GraficCircle, GraficRectangle, Auto und dem Interface IDraw
+					
+					public interface IDraw {
+						void Draw();
+					}
+					
+					public class GraficCircle : GeometricObject, IDraw {
+						[...]
+						
+						public vitual void Draw() {
+							Console.WriteLine("Der Kreis wird gezeichnet");
+						}
+					}
+					
+					public class GraficRectangle : GeometricObject, IDraw {
+						[...]
+						
+						public vitual void Draw() {
+							Console.WriteLine("Das Rechteck wird gezeichnet");
+						}
+					}
+					
+					public class Auto : IDraw {
+						[...]
+						
+						public vitual void Draw() {
+							Console.WriteLine("Das Auto wird gezeichnet");
+						}
+					}
+					
+					
+					Unter Berücksichtigung der Tatsache das wir wissen, dass ein bestimmtes Objekt nicht nur vom Typ seiner Klasse sondern auch immer vom Typ seiner Basisklasse ist (und mit dem Wissen dass IDraw eine Art Basisklasse der oben genannten Objekte ist) ist somit folgendes möglich:
+					
+					//speichern von GraficCircle, GraficRectangle und Auto Objekten unter Zuhilfename von IDraw
+					
+					IDraw[] arr = new IDraw[5];
+					arr[0] = new GraficCircle;
+					arr[1] = new GraficRectangle;
+					arr[2] = new Auto;
+					arr[3] = new GraficCircle;
+					arr[4] = new Auto;
+					
+					Nun ist es uns möglich mit
+					
+					foreach(IDraw item in arr ) {
+						item.Draw();
+					}
+					
+					die jeweilige Methode der einzelnen Klassen aufzurufen da sie durch IDraw miteinander verbunden sind obwohl zwei von ihnen eine komplett unabhänige andere Basisklasse aufweisen die in keiner Beziehung zur Autoklasse steht.
+					
+				Schnittstellen als Ersatz exakter Typangaben
+
+					Nehmen wir an, wir wollen nun ein Circle Objekt mit einem Rectangle Objekt vergleichen. Hierzu wollen wir die Fläche der beiden geometrischen Körper nutzen, damit dies auch möglich ist. Danach wollen wir ein Array erstellen in der diese Objekte dann sortiert werden. Glücklicherweise stellt die Array Klasse eine Methode zur Verfügung mit der es möglich ist, im Array gespeicherte Werte zu vergleichen. Nun stellt sich unweigerlich die Frage wie die Methode (namens Sort() ) das anstellt, da dieser ja nicht bekannt sein kann von welchem Datentyp die zu vergleichenden Objekte sind, da wir diesen ja selbst erstellt haben. Sehen wir uns zur Lösung dieses Problems die für uns relevante Überladung der Sort() Methode an:
+					
+						public static void Sort( Array array, IComparer comparer)
+						
+					Wie unschwer zu erkennen ist, verlangt diese Überladung als ersten Parameter das Array in dem die Sortierung durchegeführt werden soll. Weiterhin sehen wir hier den zweiten Parameter der den Typ IComparer angiebt, welches eine Schnittstelle ist. Natürlich können wir der Methode keine Instanz der Schnittstelle IComparer übergeben, da wir wissen, dass ein Interface nicht instanziiert werden kann. Was die Methode hier verlangt ist die Instanz einer Klasse die das Interface IComparer Implementiert. Hierbei ist es nicht erheblich um welche Klasse es sich handelt, was uns die Möglichkeit gibt Objekte der verschiedensten Klassen miteinander zu vergleichen.
+					
+					Sehen wir uns an dieser Stelle die Schnittstellenmethode Compare() der Schnittstelle ICompare an:
+					
+						int Compare(Object x, Object y);
+						
+					Da die Methode Sort() der Klasse Array natürlich nicht wissen kann anhand welcher Kriterien sie zwei Objekte miteinander vergleichen wollen, ist dies der Teil der durch die Interfacemethode dargestellt wird un den wir damit selbst programmieren müssen. Was wir jedoch wissen ist, dass die Methode Sort() intern folgendermaßen aufgrund des Rückgabewertes von der Compare() Interfacemethode sortiert:
+					
+						Wert			Bedingung
+						
+						< 0 			x ist kleiner als y
+						0				x und y sind gleich große
+						> 0				x ist größer als y
+						
+					Damit haben wir alle Informationen die wir brauchen um die Interfacemethode Compare zu implementieren. Sehen wir uns zusammenfassend dazu folgendes Programm an (wir implementieren an dieser Stelle nur die Interfacemethode Compare() und ignorieren in diesem Beispiel alle weiteren. Wie wir wissen wäre dies in einem richtigen Programm nicht möglich. Weiterhin gehen wir davon aus, dass wir in der Klasse GeometricObject eine Methode Bigger() implementiert haben die in der Lage ist zwei Objekte anhand ihrer Oberfläche zu vergleichen.):
+					
+						class Program {
+							static void Main(string[] args) {
+								GeometricObject[] arr = new GeometricObject[5]
+								arr[0] = new Circle(34);
+								arr[1] = new Rectangle(10, 230);
+								arr[2] = new GraficCircle(37);
+								arr[3] = new Circel(20);
+								arr[4] = new GraficRectangle(12, 70);
+							}
+							
+							Array.Sort(arr, new ComparerClass());
+							foreach(GeometricObject item in arr) {
+								Console.WriteLine(item.ToString());
+							}
+							Console.ReadLine();
+						}
+						
+						class ComparerClass : IComparer {
+							public int Compare(object x, object y) {
+								return ((GeometricObject)x).Bigger((GeometricObject)y);
+							}
+						}
+						
+					Hiermit ist gezeigt, dass Interfaces die direkte Typangabe umgehen können. Der Methode Sort() ist zu keinem Zeitpunkt bekannt von welchem Typ das Objekt ist, dass ihr übergeben wird. Da sie jedoch davon ausgehen kann, dass das übergebene Objekt eine Instanz einer Klasse ist, die IComparer implementiert, kann es diese Schnittstelle nutzen um in Verbindung mit dieser Klasse zu treten. Dies geschiet logischerweise mit der Interface Compare() auf die sich sowohl die Methode Sort() der Klasse Array als auch (in unserem Fall) die Klasse GeometricObject verlassen kann.
+				
+				
 			
 			
 			
